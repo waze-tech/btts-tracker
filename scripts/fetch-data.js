@@ -17,10 +17,23 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
+const XG_FILE = path.join(DATA_DIR, 'xg-data.json');
 
 // API Configuration
 const ODDS_API_KEY = process.env.ODDS_API_KEY;
 const ODDS_API_BASE = 'https://api.the-odds-api.com/v4';
+
+// Load scraped xG data if available
+let SCRAPED_XG = {};
+try {
+  if (fs.existsSync(XG_FILE)) {
+    const xgData = JSON.parse(fs.readFileSync(XG_FILE, 'utf8'));
+    SCRAPED_XG = xgData.teams || {};
+    console.log(`📊 Loaded scraped xG data for ${Object.keys(SCRAPED_XG).length} teams`);
+  }
+} catch (e) {
+  console.log('ℹ️  No scraped xG data found, using built-in estimates');
+}
 
 // League mappings
 const LEAGUES = {
@@ -633,21 +646,49 @@ function poissonBTTS(homeExpectedGoals, awayExpectedGoals) {
 }
 
 /**
- * Generate xG data for a team based on their attack/defense strength
- * This simulates realistic xG values when actual xG data isn't available
+ * Get xG data for a team - prefers scraped real data, falls back to estimates
  */
-function generateXG(stats, leagueAvgGoals = 1.35) {
-  if (!stats) return { xG: leagueAvgGoals, xGA: leagueAvgGoals };
+function getTeamXG(teamName, stats, leagueAvgGoals = 1.35) {
+  // First, check if we have scraped real xG data
+  if (SCRAPED_XG[teamName]) {
+    const scraped = SCRAPED_XG[teamName];
+    return {
+      xG: scraped.xG,
+      xGA: scraped.xGA,
+      xGHome: scraped.xGHome || scraped.xG * 1.05,
+      xGAway: scraped.xGAway || scraped.xG * 0.92,
+      xGAHome: scraped.xGAHome || scraped.xGA * 0.95,
+      xGAAway: scraped.xGAAway || scraped.xGA * 1.08,
+      source: 'scraped',
+    };
+  }
+  
+  // Check if team has built-in xG data
+  if (stats?.xG) {
+    return {
+      xG: stats.xG,
+      xGA: stats.xGA,
+      xGHome: stats.xGHome || stats.xG * 1.05,
+      xGAway: stats.xGAway || stats.xG * 0.92,
+      xGAHome: stats.xGAHome || stats.xGA * 0.95,
+      xGAAway: stats.xGAAway || stats.xGA * 1.08,
+      source: 'built-in',
+    };
+  }
+  
+  // Fall back to estimates based on actual goals
+  if (!stats) return { xG: leagueAvgGoals, xGA: leagueAvgGoals, source: 'default' };
   
   // xG is typically slightly lower than actual goals (clinical finishing = outperforming xG)
-  const xG = stats.avgGoalsScored * 0.95;
-  const xGA = stats.avgGoalsConceded * 1.02;
-  const xGHome = stats.home.scored * 0.94;
-  const xGAway = stats.away.scored * 0.96;
-  const xGAHome = stats.home.conceded * 1.01;
-  const xGAAway = stats.away.conceded * 1.03;
-  
-  return { xG, xGA, xGHome, xGAway, xGAHome, xGAAway };
+  return {
+    xG: stats.avgGoalsScored * 0.95,
+    xGA: stats.avgGoalsConceded * 1.02,
+    xGHome: stats.home.scored * 0.94,
+    xGAway: stats.away.scored * 0.96,
+    xGAHome: stats.home.conceded * 1.01,
+    xGAAway: stats.away.conceded * 1.03,
+    source: 'estimated',
+  };
 }
 
 /**
@@ -661,9 +702,9 @@ function calculateExpectedGoals(homeTeam, awayTeam, leagueAvgGoals) {
     return { home: leagueAvgGoals / 2 * 1.1, away: leagueAvgGoals / 2 * 0.9, method: 'fallback' };
   }
   
-  // Generate xG if not present
-  const homeXG = homeStats.xG ? homeStats : { ...homeStats, ...generateXG(homeStats, leagueAvgGoals / 2) };
-  const awayXG = awayStats.xG ? awayStats : { ...awayStats, ...generateXG(awayStats, leagueAvgGoals / 2) };
+  // Get xG data (prefers scraped real data)
+  const homeXG = getTeamXG(homeTeam, homeStats, leagueAvgGoals / 2);
+  const awayXG = getTeamXG(awayTeam, awayStats, leagueAvgGoals / 2);
   
   // Use xG-based calculation (more accurate than actual goals)
   // Home xG adjusted for opponent's defensive xGA

@@ -346,13 +346,56 @@ function renderStats(data, filteredFixtures) {
   document.getElementById('highConfidence').textContent = highConfidence;
 }
 
-function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'all') {
+function filterByDate(fixtures, dateFilter) {
+  if (dateFilter === 'all') return fixtures;
+  
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  // Get start of current week (Monday)
+  const thisWeekStart = new Date(today);
+  thisWeekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  const thisWeekEnd = new Date(thisWeekStart);
+  thisWeekEnd.setDate(thisWeekStart.getDate() + 7);
+  
+  // Next week
+  const nextWeekStart = new Date(thisWeekEnd);
+  const nextWeekEnd = new Date(nextWeekStart);
+  nextWeekEnd.setDate(nextWeekStart.getDate() + 7);
+  
+  return fixtures.filter(f => {
+    const fixtureDate = new Date(f.commenceTime);
+    const fixtureDateOnly = new Date(fixtureDate.getFullYear(), fixtureDate.getMonth(), fixtureDate.getDate());
+    
+    switch (dateFilter) {
+      case 'today':
+        return fixtureDateOnly.getTime() === today.getTime();
+      case 'tomorrow':
+        return fixtureDateOnly.getTime() === tomorrow.getTime();
+      case 'week':
+        return fixtureDate >= thisWeekStart && fixtureDate < thisWeekEnd;
+      case 'next-week':
+        return fixtureDate >= nextWeekStart && fixtureDate < nextWeekEnd;
+      default:
+        return true;
+    }
+  });
+}
+
+function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'all', dateFilter = 'all') {
   const grid = document.getElementById('fixturesGrid');
   
   let filtered = data.fixtures;
+  
+  // Apply league filter
   if (filter !== 'all') {
-    filtered = data.fixtures.filter(f => f.league === filter);
+    filtered = filtered.filter(f => f.league === filter);
   }
+  
+  // Apply date filter
+  filtered = filterByDate(filtered, dateFilter);
   
   // Sort options
   if (sortBy === 'value') {
@@ -422,6 +465,7 @@ async function init() {
     filter: document.querySelector('.filter-btn.active')?.dataset.filter || 'all',
     sort: document.getElementById('sortSelect')?.value || 'probability',
     topN: document.getElementById('topNSelect')?.value || 'all',
+    dateFilter: document.getElementById('dateFilter')?.value || 'all',
   });
   
   // Set up filter buttons
@@ -430,7 +474,7 @@ async function init() {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const state = getFilterState();
-      renderFixtures(data, btn.dataset.filter, state.sort, state.topN);
+      renderFixtures(data, btn.dataset.filter, state.sort, state.topN, state.dateFilter);
     });
   });
   
@@ -439,7 +483,7 @@ async function init() {
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {
       const state = getFilterState();
-      renderFixtures(data, state.filter, sortSelect.value, state.topN);
+      renderFixtures(data, state.filter, sortSelect.value, state.topN, state.dateFilter);
     });
   }
   
@@ -448,7 +492,16 @@ async function init() {
   if (topNSelect) {
     topNSelect.addEventListener('change', () => {
       const state = getFilterState();
-      renderFixtures(data, state.filter, state.sort, topNSelect.value);
+      renderFixtures(data, state.filter, state.sort, topNSelect.value, state.dateFilter);
+    });
+  }
+  
+  // Set up date filter select
+  const dateFilter = document.getElementById('dateFilter');
+  if (dateFilter) {
+    dateFilter.addEventListener('change', () => {
+      const state = getFilterState();
+      renderFixtures(data, state.filter, state.sort, state.topN, dateFilter.value);
     });
   }
 }
