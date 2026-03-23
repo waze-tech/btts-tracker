@@ -25,14 +25,159 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const RESULTS_FILE = path.join(DATA_DIR, 'results-history.json');
 const REVIEWS_FILE = path.join(DATA_DIR, 'model-reviews.json');
+const CHANGELOG_FILE = path.join(DATA_DIR, 'model-changelog.json');
 
-// Current model weights (should match fetch-data.js)
-const CURRENT_WEIGHTS = {
-  xgPoisson: 0.45,
-  historicBtts: 0.25,
-  scoringPatterns: 0.15,
-  recentForm: 0.15,
-};
+/**
+ * Load current weights from changelog (source of truth)
+ */
+function loadCurrentWeights() {
+  if (fs.existsSync(CHANGELOG_FILE)) {
+    const changelog = JSON.parse(fs.readFileSync(CHANGELOG_FILE, 'utf8'));
+    return changelog.currentWeights;
+  }
+  // Default weights if no changelog exists
+  return {
+    xgPoisson: 0.45,
+    historicBtts: 0.25,
+    scoringPatterns: 0.15,
+    recentForm: 0.15,
+  };
+}
+
+function loadChangelog() {
+  if (fs.existsSync(CHANGELOG_FILE)) {
+    return JSON.parse(fs.readFileSync(CHANGELOG_FILE, 'utf8'));
+  }
+  return {
+    currentVersion: '1.0.0',
+    currentWeights: loadCurrentWeights(),
+    changelog: [],
+    pendingProposals: [],
+  };
+}
+
+function saveChangelog(changelog) {
+  fs.writeFileSync(CHANGELOG_FILE, JSON.stringify(changelog, null, 2));
+}
+
+/**
+ * Add a proposal to pending (requires human approval)
+ */
+function addPendingProposal(proposal) {
+  const changelog = loadChangelog();
+  const proposalId = `prop-${Date.now()}`;
+  
+  changelog.pendingProposals.push({
+    id: proposalId,
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+    ...proposal,
+  });
+  
+  saveChangelog(changelog);
+  return proposalId;
+}
+
+/**
+ * Apply an approved proposal (called manually after human approval)
+ */
+function applyProposal(proposalId, approvedBy) {
+  const changelog = loadChangelog();
+  const proposalIndex = changelog.pendingProposals.findIndex(p => p.id === proposalId);
+  
+  if (proposalIndex === -1) {
+    console.log(`❌ Proposal ${proposalId} not found`);
+    return false;
+  }
+  
+  const proposal = changelog.pendingProposals[proposalIndex];
+  
+  // Increment version
+  const versionParts = changelog.currentVersion.split('.').map(Number);
+  versionParts[2]++; // Patch version
+  const newVersion = versionParts.join('.');
+  
+  // Record previous weights for rollback
+  const previousWeights = { ...changelog.currentWeights };
+  
+  // Apply new weights
+  changelog.currentWeights = proposal.proposedWeights;
+  changelog.currentVersion = newVersion;
+  
+  // Add to changelog
+  changelog.changelog.push({
+    version: newVersion,
+    date: new Date().toISOString().split('T')[0],
+    author: 'model-review',
+    previousWeights,
+    changes: {
+      weights: proposal.proposedWeights,
+    },
+    reasoning: proposal.reasoning,
+    proposals: proposal.proposals,
+    approved: true,
+    approvedBy,
+    approvedAt: new Date().toISOString(),
+    performance: null, // Will be filled in by next review
+  });
+  
+  // Remove from pending
+  changelog.pendingProposals.splice(proposalIndex, 1);
+  
+  saveChangelog(changelog);
+  console.log(`✅ Applied proposal ${proposalId} - new version ${newVersion}`);
+  console.log(`   Approved by: ${approvedBy}`);
+  return true;
+}
+
+/**
+ * Rollback to a previous version
+ */
+function rollback(targetVersion, reason, approvedBy) {
+  const changelog = loadChangelog();
+  const targetEntry = changelog.changelog.find(c => c.version === targetVersion);
+  
+  if (!targetEntry) {
+    console.log(`❌ Version ${targetVersion} not found in changelog`);
+    return false;
+  }
+  
+  const previousWeights = { ...changelog.currentWeights };
+  
+  // Increment version (rollbacks are still new versions)
+  const versionParts = changelog.currentVersion.split('.').map(Number);
+  versionParts[2]++;
+  const newVersion = versionParts.join('.');
+  
+  // Apply rollback
+  changelog.currentWeights = targetEntry.changes.weights;
+  changelog.currentVersion = newVersion;
+  
+  // Record rollback
+  changelog.changelog.push({
+    version: newVersion,
+    date: new Date().toISOString().split('T')[0],
+    author: 'rollback',
+    previousWeights,
+    changes: {
+      weights: targetEntry.changes.weights,
+    },
+    reasoning: `ROLLBACK to v${targetVersion}: ${reason}`,
+    rollbackFrom: changelog.currentVersion,
+    rollbackTo: targetVersion,
+    approved: true,
+    approvedBy,
+    approvedAt: new Date().toISOString(),
+    performance: null,
+  });
+  
+  saveChangelog(changelog);
+  console.log(`✅ Rolled back to v${targetVersion} weights - new version ${newVersion}`);
+  return true;
+}
+
+// Current model weights loaded from changelog
+const CURRENT_WEIGHTS = loadCurrentWeights();
 
 function loadResultsHistory() {
   if (fs.existsSync(RESULTS_FILE)) {
@@ -404,10 +549,13 @@ function runModelReview() {
   }
   console.log('');
   
+  // Handle proposals - DO NOT AUTO-APPLY, surface for human approval
   if (proposals.weightChanged) {
-    console.log('📐 PROPOSED WEIGHT ADJUSTMENTS');
+    console.log('📐 PROPOSED WEIGHT ADJUSTMENTS (REQUIRES APPROVAL)');
     console.log('───────────────────────────────────────');
-    console.log('Current weights:');
+    console.log('⚠️  These changes are NOT auto-applied. Human approval required.\n');
+    
+    console.log('Current weights (v' + loadChangelog().currentVersion + '):');
     Object.entries(proposals.currentWeights).forEach(([k, v]) => {
       console.log(`  ${k.padEnd(15)}: ${(v * 100).toFixed(0)}%`);
     });
@@ -418,6 +566,23 @@ function runModelReview() {
       const arrow = diff > 0 ? '↑' : diff < 0 ? '↓' : '→';
       console.log(`  ${k.padEnd(15)}: ${(v * 100).toFixed(0)}% ${arrow}`);
     });
+    
+    // Save as pending proposal
+    const proposalId = addPendingProposal({
+      proposedWeights: proposals.proposedWeights,
+      reasoning: proposals.proposals.map(p => `${p.issue}: ${p.suggestion}`).join('; '),
+      proposals: proposals.proposals,
+      analysisDate: new Date().toISOString(),
+      accuracy: {
+        overall: analysis.overallAccuracy,
+        top3: analysis.top3Accuracy,
+      },
+      roi: analysis.roi,
+    });
+    
+    console.log(`\n📋 Proposal saved as: ${proposalId}`);
+    console.log('   To approve: node scripts/model-review.js approve ' + proposalId + ' "Your Name"');
+    console.log('   To reject:  node scripts/model-review.js reject ' + proposalId);
   }
   console.log('');
   
@@ -437,7 +602,98 @@ function runModelReview() {
   return review;
 }
 
-// Run if called directly
-runModelReview();
+// CLI Commands
+const args = process.argv.slice(2);
+const command = args[0];
 
-export { runModelReview };
+if (command === 'approve' && args.length >= 3) {
+  // node scripts/model-review.js approve <proposalId> "Approver Name"
+  const proposalId = args[1];
+  const approver = args.slice(2).join(' ');
+  applyProposal(proposalId, approver);
+} else if (command === 'reject' && args.length >= 2) {
+  // node scripts/model-review.js reject <proposalId>
+  const proposalId = args[1];
+  const changelog = loadChangelog();
+  const idx = changelog.pendingProposals.findIndex(p => p.id === proposalId);
+  if (idx !== -1) {
+    changelog.pendingProposals[idx].status = 'rejected';
+    changelog.pendingProposals[idx].rejectedAt = new Date().toISOString();
+    saveChangelog(changelog);
+    console.log(`❌ Rejected proposal ${proposalId}`);
+  } else {
+    console.log(`⚠️  Proposal ${proposalId} not found`);
+  }
+} else if (command === 'rollback' && args.length >= 4) {
+  // node scripts/model-review.js rollback <version> "reason" "Approver Name"
+  const version = args[1];
+  const reason = args[2];
+  const approver = args.slice(3).join(' ');
+  rollback(version, reason, approver);
+} else if (command === 'pending') {
+  // Show pending proposals
+  const changelog = loadChangelog();
+  console.log('\n📋 PENDING PROPOSALS');
+  console.log('───────────────────────────────────────');
+  if (changelog.pendingProposals.filter(p => p.status === 'pending').length === 0) {
+    console.log('  No pending proposals');
+  } else {
+    changelog.pendingProposals.filter(p => p.status === 'pending').forEach(p => {
+      console.log(`\n  ID: ${p.id}`);
+      console.log(`  Created: ${p.createdAt}`);
+      console.log(`  Reasoning: ${p.reasoning}`);
+      console.log(`  Proposed weights:`);
+      Object.entries(p.proposedWeights).forEach(([k, v]) => {
+        console.log(`    ${k}: ${(v * 100).toFixed(0)}%`);
+      });
+    });
+  }
+} else if (command === 'history') {
+  // Show changelog history
+  const changelog = loadChangelog();
+  console.log('\n📜 MODEL VERSION HISTORY');
+  console.log('───────────────────────────────────────');
+  console.log(`Current version: ${changelog.currentVersion}`);
+  console.log('');
+  changelog.changelog.slice(-10).reverse().forEach(entry => {
+    console.log(`v${entry.version} (${entry.date}) - ${entry.author}`);
+    console.log(`  ${entry.reasoning.substring(0, 80)}${entry.reasoning.length > 80 ? '...' : ''}`);
+    if (entry.approvedBy) console.log(`  Approved by: ${entry.approvedBy}`);
+    console.log('');
+  });
+} else if (command === 'weights') {
+  // Show current weights
+  const changelog = loadChangelog();
+  console.log('\n⚖️  CURRENT MODEL WEIGHTS (v' + changelog.currentVersion + ')');
+  console.log('───────────────────────────────────────');
+  Object.entries(changelog.currentWeights).forEach(([k, v]) => {
+    console.log(`  ${k.padEnd(15)}: ${(v * 100).toFixed(0)}%`);
+  });
+} else if (command === 'help' || command === '--help') {
+  console.log(`
+BTTS Model Review - Weekly Analysis & Weight Management
+
+Commands:
+  node scripts/model-review.js              Run weekly analysis
+  node scripts/model-review.js pending      Show pending proposals
+  node scripts/model-review.js history      Show version history
+  node scripts/model-review.js weights      Show current weights
+  
+  node scripts/model-review.js approve <id> "Name"
+                                            Approve and apply a proposal
+  
+  node scripts/model-review.js reject <id>  Reject a proposal
+  
+  node scripts/model-review.js rollback <version> "reason" "Name"
+                                            Rollback to previous version
+                                            
+Examples:
+  node scripts/model-review.js approve prop-1234567890 "Tom"
+  node scripts/model-review.js rollback 1.0.0 "Performance dropped" "Tom"
+  `);
+} else {
+  // Default: run the review
+  runModelReview();
+}
+
+export { runModelReview, applyProposal, rollback, loadChangelog };
