@@ -346,7 +346,7 @@ function renderStats(data, filteredFixtures) {
   document.getElementById('highConfidence').textContent = highConfidence;
 }
 
-function renderFixtures(data, filter = 'all', sortBy = 'probability') {
+function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'all') {
   const grid = document.getElementById('fixturesGrid');
   
   let filtered = data.fixtures;
@@ -363,6 +363,12 @@ function renderFixtures(data, filter = 'all', sortBy = 'probability') {
     filtered = [...filtered].sort((a, b) => new Date(a.commenceTime) - new Date(b.commenceTime));
   }
   // Default is probability (already sorted)
+  
+  // Apply top N filter
+  if (topN !== 'all') {
+    const n = parseInt(topN);
+    filtered = filtered.slice(0, n);
+  }
   
   if (filtered.length === 0) {
     grid.innerHTML = '<div class="loading"><p>No fixtures available for this filter</p></div>';
@@ -408,16 +414,23 @@ async function init() {
   // Render methodology
   renderMethodology(data);
   
-  // Render initial fixtures
-  renderFixtures(data);
+  // Render initial fixtures (default to Top 3)
+  renderFixtures(data, 'all', 'probability', '3');
+  
+  // Helper to get current filter state
+  const getFilterState = () => ({
+    filter: document.querySelector('.filter-btn.active')?.dataset.filter || 'all',
+    sort: document.getElementById('sortSelect')?.value || 'probability',
+    topN: document.getElementById('topNSelect')?.value || 'all',
+  });
   
   // Set up filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const sortSelect = document.getElementById('sortSelect');
-      renderFixtures(data, btn.dataset.filter, sortSelect?.value || 'probability');
+      const state = getFilterState();
+      renderFixtures(data, btn.dataset.filter, state.sort, state.topN);
     });
   });
   
@@ -425,8 +438,17 @@ async function init() {
   const sortSelect = document.getElementById('sortSelect');
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {
-      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-      renderFixtures(data, activeFilter, sortSelect.value);
+      const state = getFilterState();
+      renderFixtures(data, state.filter, sortSelect.value, state.topN);
+    });
+  }
+  
+  // Set up top N select
+  const topNSelect = document.getElementById('topNSelect');
+  if (topNSelect) {
+    topNSelect.addEventListener('change', () => {
+      const state = getFilterState();
+      renderFixtures(data, state.filter, state.sort, topNSelect.value);
     });
   }
 }
