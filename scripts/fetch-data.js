@@ -821,13 +821,14 @@ async function fetchOddsFromAPI(sportKey) {
   if (!ODDS_API_KEY) return null;
   
   try {
+    // Free tier only has h2h (match winner), not btts
+    // We'll fetch h2h and use our model for BTTS probability
     const response = await axios.get(`${ODDS_API_BASE}/sports/${sportKey}/odds`, {
       params: {
         apiKey: ODDS_API_KEY,
         regions: 'uk',
-        markets: 'btts',
+        markets: 'h2h',
         oddsFormat: 'decimal',
-        bookmakers: 'paddypower,betfair,williamhill,bet365'
       }
     });
     return response.data;
@@ -1042,28 +1043,12 @@ async function fetchAllData() {
       const oddsData = await fetchOddsFromAPI(sportKey);
       
       if (oddsData && oddsData.length > 0) {
+        console.log(`✅ ${LEAGUES[sportKey].name}: ${oddsData.length} fixtures`);
+        
         for (const event of oddsData) {
           const homeTeam = normalizeTeamName(event.home_team);
           const awayTeam = normalizeTeamName(event.away_team);
           const leagueInfo = LEAGUES[sportKey];
-          
-          // Find BTTS odds
-          let bttsYes = null, bttsNo = null;
-          for (const bookmaker of event.bookmakers || []) {
-            const bttsMarket = bookmaker.markets?.find(m => m.key === 'btts');
-            if (bttsMarket) {
-              const yesOutcome = bttsMarket.outcomes?.find(o => o.name === 'Yes');
-              const noOutcome = bttsMarket.outcomes?.find(o => o.name === 'No');
-              if (yesOutcome && (!bttsYes || yesOutcome.price > bttsYes.odds)) {
-                bttsYes = { odds: yesOutcome.price, bookmaker: bookmaker.title };
-              }
-              if (noOutcome && (!bttsNo || noOutcome.price > bttsNo.odds)) {
-                bttsNo = { odds: noOutcome.price, bookmaker: bookmaker.title };
-              }
-            }
-          }
-          
-          if (!bttsYes) continue;
           
           const probability = calculateBTTSProbability(homeTeam, awayTeam, sportKey);
           const confidence = calculateConfidence(homeTeam, awayTeam);
@@ -1071,6 +1056,12 @@ async function fetchAllData() {
           
           const homeStats = TEAM_STATS[homeTeam];
           const awayStats = TEAM_STATS[awayTeam];
+          
+          // Generate estimated BTTS odds from our probability (no BTTS market on free tier)
+          // Apply typical bookmaker margin (~8%)
+          const margin = 0.92;
+          const bttsYesOdds = parseFloat(((1 / probability) * margin).toFixed(2));
+          const bttsNoOdds = parseFloat(((1 / (1 - probability)) * margin).toFixed(2));
           
           fixtures.push({
             id: event.id,
@@ -1080,8 +1071,8 @@ async function fetchAllData() {
             awayTeam,
             commenceTime: event.commence_time,
             btts: {
-              yes: bttsYes,
-              no: bttsNo,
+              yes: { odds: bttsYesOdds, bookmaker: 'Model Est.' },
+              no: { odds: bttsNoOdds, bookmaker: 'Model Est.' },
             },
             expectedGoals: {
               home: parseFloat(expectedGoals.home.toFixed(2)),
@@ -1116,12 +1107,13 @@ async function fetchAllData() {
             },
             probability,
             confidence,
-            impliedProbFromOdds: 1 / bttsYes.odds,
+            impliedProbFromOdds: probability, // Same as our model since we're estimating
             models: {
               poisson: poissonBTTS(expectedGoals.home, expectedGoals.away),
               historic: homeStats && awayStats ? (homeStats.home.bttsRate * 0.55 + awayStats.away.bttsRate * 0.45) : probability,
               form: homeStats && awayStats ? (calculateFormWeight(homeStats.form) + calculateFormWeight(awayStats.form)) / 2 : probability,
             },
+            source: 'live',
           });
         }
       }
