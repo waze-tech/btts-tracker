@@ -1,130 +1,26 @@
 /**
- * BTTS Tracker - Frontend
+ * BTTS Tracker - Advanced Frontend
+ * Displays comprehensive BTTS probability analysis
  */
 
-// Try to load data from the data folder, fallback to mock
+// Load data from the data folder
 async function loadData() {
   try {
-    const response = await fetch('/data/btts-data.json');
+    const response = await fetch('/btts-data.json');
     if (response.ok) {
       return await response.json();
     }
   } catch (e) {
-    console.log('No data file found, using mock data');
+    console.log('Error loading data:', e);
   }
   
-  // Return mock data for demo
-  return generateMockData();
-}
-
-function generateMockData() {
-  const teams = {
-    'Championship': [
-      'Leeds United', 'Sheffield United', 'Burnley', 'Sunderland', 'West Bromwich Albion',
-      'Middlesbrough', 'Norwich City', 'Coventry City', 'Bristol City', 'Hull City',
-      'Blackburn Rovers', 'Stoke City', 'Watford', 'Millwall', 'Swansea City',
-      'Preston North End', 'QPR', 'Plymouth Argyle', 'Derby County', 'Cardiff City'
-    ],
-    'League One': [
-      'Birmingham City', 'Wrexham', 'Huddersfield Town', 'Reading', 'Bolton Wanderers',
-      'Barnsley', 'Leyton Orient', 'Charlton Athletic', 'Peterborough United', 'Lincoln City',
-      'Wigan Athletic', 'Cambridge United', 'Northampton Town', 'Burton Albion', 'Port Vale'
-    ],
-    'League Two': [
-      'Stockport County', 'Doncaster Rovers', 'MK Dons', 'Chesterfield', 'Crewe Alexandra',
-      'Notts County', 'Walsall', 'Gillingham', 'Bradford City', 'Accrington Stanley',
-      'Harrogate Town', 'Grimsby Town', 'Swindon Town', 'Carlisle United', 'Barrow'
-    ]
-  };
-
-  const fixtures = [];
-  let globalRank = 1;
-  
-  // Generate all fixtures first
-  const allFixtures = [];
-  
-  Object.entries(teams).forEach(([league, teamList]) => {
-    // Shuffle teams for random matchups
-    const shuffled = [...teamList].sort(() => Math.random() - 0.5);
-    
-    // Generate fixtures (pairs of teams)
-    for (let i = 0; i < Math.min(8, Math.floor(shuffled.length / 2)); i++) {
-      const homeTeam = shuffled[i * 2];
-      const awayTeam = shuffled[i * 2 + 1];
-      
-      // Generate realistic BTTS odds (typically 1.60 - 2.10)
-      const bttsYesOdds = (1.55 + Math.random() * 0.55).toFixed(2);
-      const bttsNoOdds = (1.75 + Math.random() * 0.45).toFixed(2);
-      
-      // Generate historical BTTS rates (45-85%)
-      const homeBttsRate = 0.45 + Math.random() * 0.4;
-      const awayBttsRate = 0.45 + Math.random() * 0.4;
-      
-      // Calculate combined probability (weighted average with some randomness)
-      const combinedProb = (homeBttsRate * 0.5 + awayBttsRate * 0.5) * (0.9 + Math.random() * 0.2);
-      
-      // Generate mock recent form (last 5 games)
-      const homeForm = Array.from({length: 5}, () => Math.random() > 0.4);
-      const awayForm = Array.from({length: 5}, () => Math.random() > 0.4);
-      
-      // Generate realistic stats
-      const homeRecentScored = Math.floor(4 + Math.random() * 8);
-      const awayRecentScored = Math.floor(4 + Math.random() * 8);
-      const homeRecentConceded = Math.floor(3 + Math.random() * 8);
-      const awayRecentConceded = Math.floor(3 + Math.random() * 8);
-      
-      // Days from now for the fixture
-      const daysFromNow = Math.floor(Math.random() * 7);
-      const fixtureDate = new Date();
-      fixtureDate.setDate(fixtureDate.getDate() + daysFromNow);
-      fixtureDate.setHours(Math.random() > 0.5 ? 15 : 19, Math.random() > 0.5 ? 0 : 30, 0);
-      
-      allFixtures.push({
-        id: `${league.toLowerCase().replace(' ', '-')}-${i}`,
-        league,
-        homeTeam,
-        awayTeam,
-        commenceTime: fixtureDate.toISOString(),
-        btts: {
-          yes: { odds: parseFloat(bttsYesOdds), bookmaker: 'Paddy Power' },
-          no: { odds: parseFloat(bttsNoOdds), bookmaker: 'Paddy Power' },
-        },
-        stats: {
-          home: {
-            bttsRate: homeBttsRate,
-            recentScored: homeRecentScored,
-            recentConceded: homeRecentConceded,
-            lastBttsGame: homeForm.indexOf(true) + 1 || 6,
-            gamesAnalyzed: 10,
-            form: homeForm,
-          },
-          away: {
-            bttsRate: awayBttsRate,
-            recentScored: awayRecentScored,
-            recentConceded: awayRecentConceded,
-            lastBttsGame: awayForm.indexOf(true) + 1 || 6,
-            gamesAnalyzed: 10,
-            form: awayForm,
-          },
-        },
-        probability: Math.min(0.92, Math.max(0.35, combinedProb)),
-        impliedProbFromOdds: 1 / parseFloat(bttsYesOdds),
-      });
-    }
-  });
-  
-  // Sort by probability descending and assign ranks
-  allFixtures.sort((a, b) => b.probability - a.probability);
-  allFixtures.forEach((fixture, index) => {
-    fixture.rank = index + 1;
-    fixture.valueRating = fixture.probability - fixture.impliedProbFromOdds;
-  });
-  
-  return {
-    fetchedAt: new Date().toISOString(),
-    source: 'live',
-    fixtures: allFixtures,
-  };
+  // Show error state
+  document.getElementById('fixturesGrid').innerHTML = `
+    <div class="loading">
+      <p>⚠️ No data found. Run <code>npm run fetch</code> to generate fixtures.</p>
+    </div>
+  `;
+  return null;
 }
 
 function formatDate(isoString) {
@@ -149,8 +45,14 @@ function formatDate(isoString) {
 }
 
 function getProbabilityClass(prob) {
-  if (prob >= 0.7) return 'high';
+  if (prob >= 0.70) return 'high';
   if (prob >= 0.55) return 'medium';
+  return 'low';
+}
+
+function getConfidenceClass(confidence) {
+  if (confidence >= 0.8) return 'high';
+  if (confidence >= 0.6) return 'medium';
   return 'low';
 }
 
@@ -167,23 +69,94 @@ function getLeagueColor(league) {
   return colors[league] || '#22c55e';
 }
 
-function renderFixture(fixture, showRank = true) {
-  const probClass = getProbabilityClass(fixture.probability);
-  const leagueClass = getLeagueClass(fixture.league);
-  const valueClass = fixture.valueRating > 0 ? 'positive' : 'negative';
-  
-  // Generate form dots
-  const homeFormDots = fixture.stats?.home?.form?.map(btts => 
-    `<span class="form-dot ${btts ? 'btts' : 'no-btts'}"></span>`
-  ).join('') || '';
-  
-  const awayFormDots = fixture.stats?.away?.form?.map(btts => 
-    `<span class="form-dot ${btts ? 'btts' : 'no-btts'}"></span>`
-  ).join('') || '';
+function renderFormDots(form) {
+  if (!form || form.length === 0) return '';
+  return form.map((btts, i) => 
+    `<span class="form-dot ${btts ? 'btts' : 'no-btts'}" title="Game ${i + 1}: ${btts ? 'BTTS' : 'No BTTS'}"></span>`
+  ).join('');
+}
+
+function renderModelBreakdown(models) {
+  if (!models) return '';
   
   return `
-    <div class="fixture-wrapper">
+    <div class="model-breakdown">
+      <div class="model-row">
+        <span class="model-label">Poisson</span>
+        <div class="model-bar">
+          <div class="model-fill" style="width: ${models.poisson * 100}%"></div>
+        </div>
+        <span class="model-value">${(models.poisson * 100).toFixed(0)}%</span>
+      </div>
+      <div class="model-row">
+        <span class="model-label">Historic</span>
+        <div class="model-bar">
+          <div class="model-fill" style="width: ${models.historic * 100}%"></div>
+        </div>
+        <span class="model-value">${(models.historic * 100).toFixed(0)}%</span>
+      </div>
+      <div class="model-row">
+        <span class="model-label">Form</span>
+        <div class="model-bar">
+          <div class="model-fill" style="width: ${models.form * 100}%"></div>
+        </div>
+        <span class="model-value">${(models.form * 100).toFixed(0)}%</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderTeamStats(stats, isHome) {
+  if (!stats) return '<span class="no-data">No historical data</span>';
+  
+  const location = isHome ? 'Home' : 'Away';
+  
+  return `
+    <div class="team-detailed-stats">
+      <div class="stat-row">
+        <span class="stat-label">${location} BTTS Rate</span>
+        <span class="stat-value ${stats.bttsRate >= 0.55 ? 'highlight-good' : stats.bttsRate <= 0.45 ? 'highlight-bad' : ''}">${(stats.bttsRate * 100).toFixed(0)}%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Avg Scored</span>
+        <span class="stat-value">${stats.avgScored.toFixed(2)}</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Avg Conceded</span>
+        <span class="stat-value">${stats.avgConceded.toFixed(2)}</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Clean Sheet %</span>
+        <span class="stat-value ${stats.cleanSheetRate >= 0.35 ? 'highlight-bad' : ''}">${(stats.cleanSheetRate * 100).toFixed(0)}%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Failed to Score %</span>
+        <span class="stat-value ${stats.failedToScoreRate >= 0.25 ? 'highlight-bad' : ''}">${(stats.failedToScoreRate * 100).toFixed(0)}%</span>
+      </div>
+      <div class="stat-row strength">
+        <span class="stat-label">Attack Strength</span>
+        <span class="stat-value ${stats.attackStrength >= 1.1 ? 'highlight-good' : stats.attackStrength <= 0.9 ? 'highlight-bad' : ''}">${stats.attackStrength.toFixed(2)}</span>
+      </div>
+      <div class="stat-row strength">
+        <span class="stat-label">Defense Strength</span>
+        <span class="stat-value ${stats.defenseStrength <= 0.9 ? 'highlight-good' : stats.defenseStrength >= 1.1 ? 'highlight-bad' : ''}">${stats.defenseStrength.toFixed(2)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderFixture(fixture, showRank = true) {
+  const probClass = getProbabilityClass(fixture.probability);
+  const confidenceClass = getConfidenceClass(fixture.confidence);
+  const leagueClass = getLeagueClass(fixture.league);
+  const valueClass = fixture.valueRating > 0 ? 'positive' : 'negative';
+  const isTopPick = fixture.rank <= 3;
+  const isValueBet = fixture.isValueBet;
+  
+  return `
+    <div class="fixture-wrapper ${isTopPick ? 'top-pick' : ''}" data-fixture-id="${fixture.id}">
       ${showRank && fixture.rank <= 3 ? `<span class="rank-badge">${fixture.rank}</span>` : ''}
+      ${isValueBet ? '<span class="value-badge">💎 VALUE</span>' : ''}
       <div class="fixture-card ${leagueClass}" style="--league-color: ${getLeagueColor(fixture.league)}">
         <div class="fixture-header">
           <span class="league-badge">${fixture.league}</span>
@@ -191,45 +164,92 @@ function renderFixture(fixture, showRank = true) {
         </div>
         
         <div class="teams">
-          <div class="team">
+          <div class="team home">
             <div class="team-name">${fixture.homeTeam}</div>
-            <div class="team-stats">
-              BTTS: ${(fixture.stats?.home?.bttsRate * 100 || 50).toFixed(0)}% 
-              • ${fixture.stats?.home?.recentScored || 0} scored (last 5)
-            </div>
-            <div class="historic-form">${homeFormDots}</div>
+            <div class="team-location">HOME</div>
+            <div class="historic-form" title="Last 5 games BTTS history">${renderFormDots(fixture.stats?.home?.form)}</div>
           </div>
-          <span class="vs">vs</span>
-          <div class="team">
-            <div class="team-name">${fixture.awayTeam}</div>
-            <div class="team-stats">
-              BTTS: ${(fixture.stats?.away?.bttsRate * 100 || 50).toFixed(0)}%
-              • ${fixture.stats?.away?.recentScored || 0} scored (last 5)
+          <div class="match-info">
+            <div class="vs">VS</div>
+            <div class="expected-goals" title="Expected Goals">
+              <span class="xg-home">${fixture.expectedGoals?.home?.toFixed(1) || '-'}</span>
+              <span class="xg-divider">-</span>
+              <span class="xg-away">${fixture.expectedGoals?.away?.toFixed(1) || '-'}</span>
             </div>
-            <div class="historic-form">${awayFormDots}</div>
+            <div class="xg-label">xG</div>
+          </div>
+          <div class="team away">
+            <div class="team-name">${fixture.awayTeam}</div>
+            <div class="team-location">AWAY</div>
+            <div class="historic-form" title="Last 5 games BTTS history">${renderFormDots(fixture.stats?.away?.form)}</div>
           </div>
         </div>
         
         <div class="probability-section">
-          <div class="prob-box">
-            <div class="prob-label">BTTS Probability</div>
-            <div class="prob-value ${probClass}">${(fixture.probability * 100).toFixed(0)}%</div>
-          </div>
-          <div class="prob-box">
-            <div class="prob-label">BTTS Yes Odds</div>
-            <div class="prob-value">${fixture.btts?.yes?.odds?.toFixed(2) || '-'}</div>
-            <div class="odds-box">
-              <span class="odds-pill">${fixture.btts?.yes?.bookmaker || 'N/A'}</span>
+          <div class="main-prob">
+            <div class="prob-ring ${probClass}">
+              <svg viewBox="0 0 36 36">
+                <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="ring-fill" stroke-dasharray="${fixture.probability * 100}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <div class="prob-center">
+                <span class="prob-value">${(fixture.probability * 100).toFixed(0)}%</span>
+                <span class="prob-label">BTTS</span>
+              </div>
             </div>
           </div>
-          <div class="prob-box">
-            <div class="prob-label">Value Rating</div>
-            <div class="value-indicator ${valueClass}">
-              ${fixture.valueRating > 0 ? '↑' : '↓'} ${(Math.abs(fixture.valueRating) * 100).toFixed(1)}%
+          
+          <div class="prob-details">
+            <div class="detail-box">
+              <div class="detail-label">Best Odds</div>
+              <div class="detail-value odds">${fixture.btts?.yes?.odds?.toFixed(2) || '-'}</div>
+              <div class="detail-sub">${fixture.btts?.yes?.bookmaker || 'N/A'}</div>
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
-              ${fixture.valueRating > 0 ? 'Underpriced' : 'Overpriced'}
+            <div class="detail-box">
+              <div class="detail-label">Implied Prob</div>
+              <div class="detail-value">${(fixture.impliedProbFromOdds * 100).toFixed(0)}%</div>
+              <div class="detail-sub">from odds</div>
             </div>
+            <div class="detail-box ${valueClass}">
+              <div class="detail-label">Value</div>
+              <div class="detail-value value">${fixture.valueRating > 0 ? '+' : ''}${(fixture.valueRating * 100).toFixed(1)}%</div>
+              <div class="detail-sub">${fixture.valueRating > 0.03 ? '✓ Good value' : fixture.valueRating > 0 ? 'Fair' : 'Overpriced'}</div>
+            </div>
+            <div class="detail-box">
+              <div class="detail-label">Confidence</div>
+              <div class="detail-value confidence ${confidenceClass}">${(fixture.confidence * 100).toFixed(0)}%</div>
+              <div class="detail-sub">data quality</div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="expand-btn" onclick="toggleDetails('${fixture.id}')">
+          <span class="expand-text">Show Analysis</span>
+          <span class="expand-icon">▼</span>
+        </button>
+        
+        <div class="expanded-details" id="details-${fixture.id}">
+          <div class="analysis-section">
+            <h4>📊 Model Breakdown</h4>
+            ${renderModelBreakdown(fixture.models)}
+          </div>
+          
+          <div class="teams-analysis">
+            <div class="team-analysis">
+              <h4>${fixture.homeTeam} (Home)</h4>
+              ${renderTeamStats(fixture.stats?.home, true)}
+            </div>
+            <div class="team-analysis">
+              <h4>${fixture.awayTeam} (Away)</h4>
+              ${renderTeamStats(fixture.stats?.away, false)}
+            </div>
+          </div>
+          
+          <div class="analysis-section">
+            <h4>📈 Key Insights</h4>
+            <ul class="insights">
+              ${generateInsights(fixture).map(i => `<li>${i}</li>`).join('')}
+            </ul>
           </div>
         </div>
       </div>
@@ -237,23 +257,112 @@ function renderFixture(fixture, showRank = true) {
   `;
 }
 
-function renderStats(fixtures) {
+function generateInsights(fixture) {
+  const insights = [];
+  const home = fixture.stats?.home;
+  const away = fixture.stats?.away;
+  
+  if (!home || !away) {
+    insights.push('Limited historical data available for analysis');
+    return insights;
+  }
+  
+  // High combined BTTS rate
+  const combinedBtts = (home.bttsRate + away.bttsRate) / 2;
+  if (combinedBtts >= 0.55) {
+    insights.push(`Both teams have high BTTS rates (${(combinedBtts * 100).toFixed(0)}% combined avg)`);
+  }
+  
+  // Attack vs Defense mismatch
+  if (home.attackStrength >= 1.15 && away.defenseStrength >= 1.05) {
+    insights.push(`${fixture.homeTeam}'s strong attack (${home.attackStrength.toFixed(2)}) vs ${fixture.awayTeam}'s weak defense (${away.defenseStrength.toFixed(2)})`);
+  }
+  if (away.attackStrength >= 1.15 && home.defenseStrength >= 1.05) {
+    insights.push(`${fixture.awayTeam}'s strong attack (${away.attackStrength.toFixed(2)}) vs ${fixture.homeTeam}'s weak defense (${home.defenseStrength.toFixed(2)})`);
+  }
+  
+  // Low clean sheet rates
+  if (home.cleanSheetRate <= 0.25 && away.cleanSheetRate <= 0.25) {
+    insights.push('Both teams rarely keep clean sheets - goals expected at both ends');
+  }
+  
+  // Low failed to score rates
+  if (home.failedToScoreRate <= 0.15 && away.failedToScoreRate <= 0.20) {
+    insights.push('Both teams consistently find the net - low blank rates');
+  }
+  
+  // Recent form trend
+  const homeFormBtts = home.form?.filter(x => x).length || 0;
+  const awayFormBtts = away.form?.filter(x => x).length || 0;
+  if (homeFormBtts >= 4 && awayFormBtts >= 4) {
+    insights.push(`Hot streak: BTTS in ${homeFormBtts}/5 home games and ${awayFormBtts}/5 away games recently`);
+  }
+  
+  // Expected goals insight
+  if (fixture.expectedGoals?.total >= 2.8) {
+    insights.push(`High expected goals (${fixture.expectedGoals.total.toFixed(2)} xG) suggests open game`);
+  }
+  
+  // Value insight
+  if (fixture.valueRating > 0.05) {
+    insights.push(`📈 Strong value bet: ${((fixture.valueRating) * 100).toFixed(1)}% edge over bookmaker odds`);
+  }
+  
+  if (insights.length === 0) {
+    insights.push('Balanced fixture with moderate BTTS probability');
+  }
+  
+  return insights.slice(0, 4); // Limit to 4 insights
+}
+
+function toggleDetails(fixtureId) {
+  const details = document.getElementById(`details-${fixtureId}`);
+  const btn = details.previousElementSibling;
+  
+  if (details.classList.contains('show')) {
+    details.classList.remove('show');
+    btn.classList.remove('expanded');
+    btn.querySelector('.expand-text').textContent = 'Show Analysis';
+  } else {
+    details.classList.add('show');
+    btn.classList.add('expanded');
+    btn.querySelector('.expand-text').textContent = 'Hide Analysis';
+  }
+}
+
+// Make toggleDetails available globally
+window.toggleDetails = toggleDetails;
+
+function renderStats(data, filteredFixtures) {
+  const fixtures = filteredFixtures || data.fixtures;
   const total = fixtures.length;
   const avgProb = fixtures.reduce((sum, f) => sum + f.probability, 0) / total;
-  const valueBets = fixtures.filter(f => f.valueRating > 0.05).length;
+  const valueBets = fixtures.filter(f => f.isValueBet).length;
+  const highConfidence = fixtures.filter(f => f.confidence >= 0.8).length;
   
   document.getElementById('totalFixtures').textContent = total;
   document.getElementById('avgProbability').textContent = `${(avgProb * 100).toFixed(0)}%`;
   document.getElementById('highValue').textContent = valueBets;
+  document.getElementById('highConfidence').textContent = highConfidence;
 }
 
-function renderFixtures(fixtures, filter = 'all') {
+function renderFixtures(data, filter = 'all', sortBy = 'probability') {
   const grid = document.getElementById('fixturesGrid');
   
-  let filtered = fixtures;
+  let filtered = data.fixtures;
   if (filter !== 'all') {
-    filtered = fixtures.filter(f => f.league === filter);
+    filtered = data.fixtures.filter(f => f.league === filter);
   }
+  
+  // Sort options
+  if (sortBy === 'value') {
+    filtered = [...filtered].sort((a, b) => b.valueRating - a.valueRating);
+  } else if (sortBy === 'odds') {
+    filtered = [...filtered].sort((a, b) => (b.btts?.yes?.odds || 0) - (a.btts?.yes?.odds || 0));
+  } else if (sortBy === 'kickoff') {
+    filtered = [...filtered].sort((a, b) => new Date(a.commenceTime) - new Date(b.commenceTime));
+  }
+  // Default is probability (already sorted)
   
   if (filtered.length === 0) {
     grid.innerHTML = '<div class="loading"><p>No fixtures available for this filter</p></div>';
@@ -261,29 +370,65 @@ function renderFixtures(fixtures, filter = 'all') {
   }
   
   grid.innerHTML = filtered.map(f => renderFixture(f)).join('');
-  renderStats(filtered);
+  renderStats(data, filtered);
+}
+
+function renderMethodology(data) {
+  if (!data.methodology) return '';
+  
+  const container = document.getElementById('methodology');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <h3>📐 Probability Methodology</h3>
+    <p>${data.methodology.description}</p>
+    <div class="methodology-models">
+      ${data.methodology.models.map(m => `
+        <div class="method-card">
+          <div class="method-weight">${(m.weight * 100)}%</div>
+          <div class="method-name">${m.name}</div>
+          <div class="method-desc">${m.description}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }
 
 // Initialize
 async function init() {
   const data = await loadData();
+  if (!data) return;
   
-  // Update last updated time
+  // Update header stats
   const lastUpdated = document.getElementById('lastUpdated');
   const fetchedAt = new Date(data.fetchedAt);
-  lastUpdated.textContent = `Last updated: ${fetchedAt.toLocaleString('en-GB')} • ${data.source === 'mock' ? 'Demo Data' : 'Live Data'}`;
+  const sourceLabel = data.source === 'live' ? '🔴 Live Data' : data.source === 'historic' ? '📊 Historic Model' : '🎲 Demo Data';
+  lastUpdated.textContent = `Last updated: ${fetchedAt.toLocaleString('en-GB')} • ${sourceLabel}`;
+  
+  // Render methodology
+  renderMethodology(data);
   
   // Render initial fixtures
-  renderFixtures(data.fixtures);
+  renderFixtures(data);
   
   // Set up filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderFixtures(data.fixtures, btn.dataset.filter);
+      const sortSelect = document.getElementById('sortSelect');
+      renderFixtures(data, btn.dataset.filter, sortSelect?.value || 'probability');
     });
   });
+  
+  // Set up sort select
+  const sortSelect = document.getElementById('sortSelect');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', () => {
+      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+      renderFixtures(data, activeFilter, sortSelect.value);
+    });
+  }
 }
 
 init();
