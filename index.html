@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTTS Tracker | Championship, League 1 & 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-hover: #334155;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #22c55e;
+      --accent-dim: #166534;
+      --warning: #eab308;
+      --danger: #ef4444;
+      --championship: #8b5cf6;
+      --league1: #3b82f6;
+      --league2: #14b8a6;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    
+    .stats-bar {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+    
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      min-width: 140px;
+    }
+    
+    .stat-box .value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    .stat-box .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+    
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    
+    .league-championship { --league-color: var(--championship); }
+    .league-league-one { --league-color: var(--league1); }
+    .league-league-two { --league-color: var(--league2); }
+    
+    .fixtures-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    
+    .fixture-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: all 0.2s;
+      border-left: 4px solid var(--league-color, var(--accent));
+    }
+    
+    .fixture-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+    }
+    
+    .fixture-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .league-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      background: var(--league-color, var(--accent));
+      color: #000;
+    }
+    
+    .kick-off {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    
+    .teams {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .team {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .team-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .team-stats {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    
+    .vs {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding: 0 0.5rem;
+    }
+    
+    .probability-section {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .prob-box {
+      flex: 1;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    
+    .prob-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    
+    .prob-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .prob-value.high { color: var(--accent); }
+    .prob-value.medium { color: var(--warning); }
+    .prob-value.low { color: var(--text-muted); }
+    
+    .odds-box {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    
+    .odds-pill {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    
+    .value-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+    
+    .value-indicator.positive {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent);
+    }
+    
+    .value-indicator.negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+    }
+    
+    .rank-badge {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      background: var(--accent);
+      color: #000;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    
+    .fixture-wrapper {
+      position: relative;
+    }
+    
+    .historic-form {
+      display: flex;
+      gap: 0.25rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    
+    .form-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .form-dot.btts { background: var(--accent); }
+    .form-dot.no-btts { background: var(--danger); }
+    
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      color: var(--text-muted);
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .last-updated {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      h1 { font-size: 1.75rem; }
+      .teams { flex-direction: column; gap: 0.5rem; }
+      .probability-section { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚽ BTTS Tracker</h1>
+      <p class="subtitle">Both Teams To Score Probability Rankings</p>
+      <p class="subtitle" style="font-size: 0.9rem; margin-top: 0.5rem;">Championship • League One • League Two</p>
+    </header>
+    
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-box">
+        <div class="value" id="totalFixtures">-</div>
+        <div class="label">Fixtures</div>
+      </div>
+      <div class="stat-box">
+        <div class="value" id="avgProbability">-</div>
+        <div class="label">Avg Probability</div>
+      </div>
+      <div class="stat-box">
+        <div class="value" id="highValue">-</div>
+        <div class="label">Value Bets</div>
+      </div>
+    </div>
+    
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All Leagues</button>
+      <button class="filter-btn" data-filter="Championship" style="--league-color: var(--championship);">Championship</button>
+      <button class="filter-btn" data-filter="League One" style="--league-color: var(--league1);">League One</button>
+      <button class="filter-btn" data-filter="League Two" style="--league-color: var(--league2);">League Two</button>
+    </div>
+    
+    <div class="fixtures-grid" id="fixturesGrid">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading fixtures...</p>
+      </div>
+    </div>
+    
+    <p class="last-updated" id="lastUpdated"></p>
+  </div>
+  
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
