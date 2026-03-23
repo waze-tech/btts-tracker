@@ -26,6 +26,10 @@ function loadResultsHistory() {
       correct: 0,
       top3Total: 0,
       top3Correct: 0,
+      top6Total: 0,
+      top6Correct: 0,
+      top9Total: 0,
+      top9Correct: 0,
       byLeague: {},
       byProbabilityBand: {
         high: { total: 0, correct: 0 },    // >= 65%
@@ -62,6 +66,8 @@ function recordResult(fixtureId, homeGoals, awayGoals) {
   const bttsPredicrected = fixture.probability >= 0.5;
   const isCorrect = bttsActual === bttsPredicrected;
   const isTop3 = fixture.rank <= 3;
+  const isTop6 = fixture.rank <= 6;
+  const isTop9 = fixture.rank <= 9;
   
   // Probability band
   let band = 'low';
@@ -81,6 +87,8 @@ function recordResult(fixtureId, homeGoals, awayGoals) {
     probability: fixture.probability,
     rank: fixture.rank,
     isTop3,
+    isTop6,
+    isTop9,
     predictedBtts: bttsPredicrected,
     isCorrect,
     band,
@@ -97,6 +105,16 @@ function recordResult(fixtureId, homeGoals, awayGoals) {
   if (isTop3) {
     history.stats.top3Total++;
     if (isCorrect) history.stats.top3Correct++;
+  }
+  
+  if (isTop6) {
+    history.stats.top6Total++;
+    if (isCorrect) history.stats.top6Correct++;
+  }
+  
+  if (isTop9) {
+    history.stats.top9Total++;
+    if (isCorrect) history.stats.top9Correct++;
   }
   
   // League stats
@@ -140,12 +158,25 @@ function updateDailyStats(history) {
   const byDate = {};
   history.predictions.forEach(p => {
     const date = p.date.split('T')[0];
-    if (!byDate[date]) byDate[date] = { total: 0, correct: 0, top3Total: 0, top3Correct: 0 };
+    if (!byDate[date]) byDate[date] = { 
+      total: 0, correct: 0, 
+      top3Total: 0, top3Correct: 0,
+      top6Total: 0, top6Correct: 0,
+      top9Total: 0, top9Correct: 0,
+    };
     byDate[date].total++;
     if (p.isCorrect) byDate[date].correct++;
     if (p.isTop3) {
       byDate[date].top3Total++;
       if (p.isCorrect) byDate[date].top3Correct++;
+    }
+    if (p.isTop6) {
+      byDate[date].top6Total++;
+      if (p.isCorrect) byDate[date].top6Correct++;
+    }
+    if (p.isTop9) {
+      byDate[date].top9Total++;
+      if (p.isCorrect) byDate[date].top9Correct++;
     }
   });
   
@@ -154,8 +185,12 @@ function updateDailyStats(history) {
       date,
       accuracy: stats.total > 0 ? stats.correct / stats.total : 0,
       top3Accuracy: stats.top3Total > 0 ? stats.top3Correct / stats.top3Total : null,
+      top6Accuracy: stats.top6Total > 0 ? stats.top6Correct / stats.top6Total : null,
+      top9Accuracy: stats.top9Total > 0 ? stats.top9Correct / stats.top9Total : null,
       total: stats.total,
       top3Total: stats.top3Total,
+      top6Total: stats.top6Total,
+      top9Total: stats.top9Total,
     }))
     .sort((a, b) => a.date.localeCompare(b.date));
   
@@ -167,12 +202,25 @@ function updateDailyStats(history) {
     weekStart.setDate(date.getDate() - date.getDay());
     const weekKey = weekStart.toISOString().split('T')[0];
     
-    if (!byWeek[weekKey]) byWeek[weekKey] = { total: 0, correct: 0, top3Total: 0, top3Correct: 0 };
+    if (!byWeek[weekKey]) byWeek[weekKey] = { 
+      total: 0, correct: 0, 
+      top3Total: 0, top3Correct: 0,
+      top6Total: 0, top6Correct: 0,
+      top9Total: 0, top9Correct: 0,
+    };
     byWeek[weekKey].total++;
     if (p.isCorrect) byWeek[weekKey].correct++;
     if (p.isTop3) {
       byWeek[weekKey].top3Total++;
       if (p.isCorrect) byWeek[weekKey].top3Correct++;
+    }
+    if (p.isTop6) {
+      byWeek[weekKey].top6Total++;
+      if (p.isCorrect) byWeek[weekKey].top6Correct++;
+    }
+    if (p.isTop9) {
+      byWeek[weekKey].top9Total++;
+      if (p.isCorrect) byWeek[weekKey].top9Correct++;
     }
   });
   
@@ -181,8 +229,12 @@ function updateDailyStats(history) {
       week,
       accuracy: stats.total > 0 ? stats.correct / stats.total : 0,
       top3Accuracy: stats.top3Total > 0 ? stats.top3Correct / stats.top3Total : null,
+      top6Accuracy: stats.top6Total > 0 ? stats.top6Correct / stats.top6Total : null,
+      top9Accuracy: stats.top9Total > 0 ? stats.top9Correct / stats.top9Total : null,
       total: stats.total,
       top3Total: stats.top3Total,
+      top6Total: stats.top6Total,
+      top9Total: stats.top9Total,
     }))
     .sort((a, b) => a.week.localeCompare(b.week));
 }
@@ -195,6 +247,8 @@ function printSummary() {
   console.log('═══════════════════════════════════════════');
   console.log(`Overall:     ${s.correct}/${s.total} = ${s.total > 0 ? ((s.correct/s.total)*100).toFixed(1) : 0}%`);
   console.log(`Top 3 Picks: ${s.top3Correct}/${s.top3Total} = ${s.top3Total > 0 ? ((s.top3Correct/s.top3Total)*100).toFixed(1) : 0}%`);
+  console.log(`Top 6 Picks: ${s.top6Correct || 0}/${s.top6Total || 0} = ${s.top6Total > 0 ? ((s.top6Correct/s.top6Total)*100).toFixed(1) : 0}%`);
+  console.log(`Top 9 Picks: ${s.top9Correct || 0}/${s.top9Total || 0} = ${s.top9Total > 0 ? ((s.top9Correct/s.top9Total)*100).toFixed(1) : 0}%`);
   console.log('═══════════════════════════════════════════');
   
   console.log('\nBy Probability Band:');
@@ -222,14 +276,21 @@ function printSummary() {
 function generateSampleHistory() {
   const history = loadResultsHistory();
   
-  // Generate 8 weeks of sample data
+  // Generate 8 weeks of sample data - 12 fixtures per week for Top 9 tracking
   const sampleResults = [];
   const teams = [
     ['Leeds United', 'Sheffield United', 'Championship'],
     ['Norwich City', 'Coventry City', 'Championship'],
+    ['Sunderland', 'Burnley', 'Championship'],
     ['Birmingham City', 'Wrexham', 'League One'],
     ['Peterborough United', 'Lincoln City', 'League One'],
+    ['Huddersfield Town', 'Stockport County', 'League One'],
     ['Doncaster Rovers', 'MK Dons', 'League Two'],
+    ['Crewe Alexandra', 'Walsall', 'League Two'],
+    ['Bradford City', 'Gillingham', 'League Two'],
+    ['QPR', 'Plymouth Argyle', 'Championship'],
+    ['Bristol City', 'Hull City', 'Championship'],
+    ['Bolton Wanderers', 'Barnsley', 'League One'],
   ];
   
   for (let week = 8; week >= 1; week--) {
@@ -239,6 +300,8 @@ function generateSampleHistory() {
     teams.forEach((team, idx) => {
       const prob = 0.45 + Math.random() * 0.35; // 45-80%
       const isTop3 = idx < 3;
+      const isTop6 = idx < 6;
+      const isTop9 = idx < 9;
       const rank = idx + 1;
       
       // Simulate outcomes - higher probability = higher chance of being correct
@@ -280,6 +343,8 @@ function generateSampleHistory() {
         probability: prob,
         rank,
         isTop3,
+        isTop6,
+        isTop9,
         predictedBtts,
         isCorrect,
         band,
@@ -297,6 +362,10 @@ function generateSampleHistory() {
     correct: 0,
     top3Total: 0,
     top3Correct: 0,
+    top6Total: 0,
+    top6Correct: 0,
+    top9Total: 0,
+    top9Correct: 0,
     byLeague: {},
     byProbabilityBand: {
       high: { total: 0, correct: 0 },
@@ -314,6 +383,16 @@ function generateSampleHistory() {
     if (r.isTop3) {
       history.stats.top3Total++;
       if (r.isCorrect) history.stats.top3Correct++;
+    }
+    
+    if (r.isTop6) {
+      history.stats.top6Total++;
+      if (r.isCorrect) history.stats.top6Correct++;
+    }
+    
+    if (r.isTop9) {
+      history.stats.top9Total++;
+      if (r.isCorrect) history.stats.top9Correct++;
     }
     
     if (!history.stats.byLeague[r.league]) {

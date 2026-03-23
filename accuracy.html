@@ -338,11 +338,21 @@
   </div>
   
   <div class="container">
-    <div class="stats-grid" id="statsGrid">
+    <div class="stats-grid" id="statsGrid" style="grid-template-columns: repeat(6, 1fr);">
       <div class="stat-card highlight">
         <div class="stat-value" id="top3Accuracy">-</div>
         <div class="stat-label">Top 3 Picks</div>
         <div class="stat-sub" id="top3Count">-</div>
+      </div>
+      <div class="stat-card" style="border-color: var(--gold); border-width: 1px;">
+        <div class="stat-value" style="color: var(--gold);" id="top6Accuracy">-</div>
+        <div class="stat-label">Top 6 Picks</div>
+        <div class="stat-sub" id="top6Count">-</div>
+      </div>
+      <div class="stat-card" style="border-color: #fb923c;">
+        <div class="stat-value" style="color: #fb923c;" id="top9Accuracy">-</div>
+        <div class="stat-label">Top 9 Picks</div>
+        <div class="stat-sub" id="top9Count">-</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="overallAccuracy">-</div>
@@ -429,6 +439,16 @@
       document.getElementById('top3Accuracy').textContent = formatPercent(top3Acc);
       document.getElementById('top3Count').textContent = `${s.top3Correct}/${s.top3Total} correct`;
       
+      // Top 6
+      const top6Acc = s.top6Total > 0 ? s.top6Correct / s.top6Total : 0;
+      document.getElementById('top6Accuracy').textContent = formatPercent(top6Acc);
+      document.getElementById('top6Count').textContent = `${s.top6Correct || 0}/${s.top6Total || 0} correct`;
+      
+      // Top 9
+      const top9Acc = s.top9Total > 0 ? s.top9Correct / s.top9Total : 0;
+      document.getElementById('top9Accuracy').textContent = formatPercent(top9Acc);
+      document.getElementById('top9Count').textContent = `${s.top9Correct || 0}/${s.top9Total || 0} correct`;
+      
       // Overall
       const overallAcc = s.total > 0 ? s.correct / s.total : 0;
       document.getElementById('overallAccuracy').textContent = formatPercent(overallAcc);
@@ -495,7 +515,27 @@
               backgroundColor: 'rgba(251, 191, 36, 0.1)',
               borderWidth: 3,
               tension: 0.3,
-              fill: true,
+              fill: false,
+              spanGaps: true,
+            },
+            {
+              label: 'Top 6 Picks',
+              data: weekly.map(w => w.top6Accuracy !== null && w.top6Accuracy !== undefined ? w.top6Accuracy * 100 : null),
+              borderColor: '#fb923c',
+              backgroundColor: 'rgba(251, 146, 60, 0.1)',
+              borderWidth: 2,
+              tension: 0.3,
+              fill: false,
+              spanGaps: true,
+            },
+            {
+              label: 'Top 9 Picks',
+              data: weekly.map(w => w.top9Accuracy !== null && w.top9Accuracy !== undefined ? w.top9Accuracy * 100 : null),
+              borderColor: '#f472b6',
+              backgroundColor: 'rgba(244, 114, 182, 0.1)',
+              borderWidth: 2,
+              tension: 0.3,
+              fill: false,
               spanGaps: true,
             },
             {
