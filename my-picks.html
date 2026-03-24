@@ -338,7 +338,7 @@
       <div id="picksContainer">
         <div class="empty-state">
           <p>No picks yet</p>
-          <p style="font-size: 0.85rem;">Go to <a href="/" style="color: var(--accent);">Predictions</a> and click "Pick This" on any fixture</p>
+          <p style="font-size: 0.85rem;">Go to <a href="/" style="color: var(--accent);">Predictions</a> and add selections to your accumulator</p>
         </div>
       </div>
     </div>
@@ -413,12 +413,20 @@
       const totalPL = totalReturns - totalStaked;
       
       const winRate = settled.length > 0 ? (won.length / settled.length) * 100 : 0;
+      
+      // Calculate average odds (handle both single and accumulator)
       const avgOdds = picks.length > 0 
-        ? picks.reduce((sum, p) => sum + p.odds, 0) / picks.length 
+        ? picks.reduce((sum, p) => sum + (p.combinedOdds || p.odds || 0), 0) / picks.length 
         : 0;
+      
+      // Count total selections (accumulators have multiple)
+      const totalSelections = picks.reduce((sum, p) => {
+        return sum + (p.type === 'accumulator' ? p.selections.length : 1);
+      }, 0);
       
       return {
         totalPicks: picks.length,
+        totalSelections,
         pending: pending.length,
         won: won.length,
         lost: lost.length,
@@ -630,11 +638,11 @@
         <table class="picks-table">
           <thead>
             <tr>
-              <th>Match</th>
-              <th>League</th>
-              <th>Prob</th>
+              <th>Type</th>
+              <th>Selections</th>
               <th>Odds</th>
               <th>Stake</th>
+              <th>Potential</th>
               <th>Status</th>
               <th>P&L</th>
               <th></th>
@@ -646,17 +654,23 @@
               const plText = pl !== null ? `£${pl >= 0 ? '+' : ''}${pl.toFixed(2)}` : '-';
               const plClass = pl === null ? '' : pl >= 0 ? 'style="color: var(--accent)"' : 'style="color: var(--danger)"';
               
-              return `
+              // Handle both single picks and accumulators
+              const isAcca = p.type === 'accumulator';
+              const odds = isAcca ? p.combinedOdds : p.odds;
+              const potential = (p.stake * odds).toFixed(2);
+              const selections = isAcca 
+                ? p.selections.map(s => \`<div style="font-size: 0.8rem; margin-bottom: 0.25rem;">\${s.homeTeam} vs \${s.awayTeam}</div>\`).join('')
+                : \`<strong>\${p.homeTeam}</strong> vs <strong>\${p.awayTeam}</strong><div style="font-size: 0.75rem; color: var(--text-dim);">\${p.league}</div>\`;
+              const typeLabel = isAcca ? \`<span style="color: var(--gold); font-weight: 600;">\${p.selections.length}-fold</span>\` : 'Single';
+              
+              return \`
                 <tr>
-                  <td>
-                    <strong>${p.homeTeam}</strong> vs <strong>${p.awayTeam}</strong>
-                    <div style="font-size: 0.75rem; color: var(--text-dim);">${new Date(p.kickoff).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}</div>
-                  </td>
-                  <td>${p.league}</td>
-                  <td>${(p.probability * 100).toFixed(0)}%</td>
-                  <td>${p.odds.toFixed(2)}</td>
-                  <td>£${p.stake.toFixed(2)}</td>
-                  <td><span class="status-badge ${p.status}">${p.status}</span></td>
+                  <td>\${typeLabel}</td>
+                  <td>\${selections}</td>
+                  <td style="color: var(--gold); font-weight: 600;">\${odds.toFixed(2)}</td>
+                  <td>£\${p.stake.toFixed(2)}</td>
+                  <td>£\${potential}</td>
+                  <td><span class="status-badge \${p.status}">\${p.status}</span></td>
                   <td ${plClass}>${plText}</td>
                   <td>
                     <button class="remove-btn" onclick="removePick(${p.id})" title="Remove">✕</button>

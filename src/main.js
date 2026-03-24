@@ -228,8 +228,8 @@ function renderFixture(fixture, showRank = true) {
             <span class="expand-text">Show Analysis</span>
             <span class="expand-icon">▼</span>
           </button>
-          <button class="pick-btn" onclick="pickFixture('${fixture.id}')" id="pick-btn-${fixture.id}">
-            🎯 Pick This
+          <button class="add-to-slip" onclick="addToSlip('${fixture.id}')" id="slip-btn-${fixture.id}">
+            + Add to Slip
           </button>
         </div>
         
@@ -341,36 +341,40 @@ window.toggleDetails = toggleDetails;
 // Store current data for picking
 let currentData = null;
 
-// Pick fixture function
-function pickFixture(fixtureId) {
+// Betslip state
+const SLIP_KEY = 'btts_betslip';
+let betslip = [];
+
+function loadBetslip() {
+  const saved = localStorage.getItem(SLIP_KEY);
+  betslip = saved ? JSON.parse(saved) : [];
+  return betslip;
+}
+
+function saveBetslip() {
+  localStorage.setItem(SLIP_KEY, JSON.stringify(betslip));
+}
+
+function addToSlip(fixtureId) {
   if (!currentData) return;
   
   const fixture = currentData.fixtures.find(f => f.id === fixtureId);
   if (!fixture) return;
   
-  // Check if already picked
-  const PICKS_KEY = 'btts_my_picks';
-  const saved = localStorage.getItem(PICKS_KEY);
-  const data = saved ? JSON.parse(saved) : { picks: [] };
+  loadBetslip();
   
-  if (data.picks.find(p => p.fixtureId === fixtureId)) {
-    alert('Already picked this fixture! View in My Picks.');
+  // Check if already in slip
+  if (betslip.find(s => s.fixtureId === fixtureId)) {
+    // Remove from slip
+    betslip = betslip.filter(s => s.fixtureId !== fixtureId);
+    saveBetslip();
+    updateSlipButton(fixtureId, false);
+    renderBetslip();
     return;
   }
   
-  // Prompt for stake
-  const stakeInput = prompt('Enter stake amount (£):', '1');
-  if (stakeInput === null) return;
-  
-  const stake = parseFloat(stakeInput);
-  if (isNaN(stake) || stake <= 0) {
-    alert('Please enter a valid stake amount');
-    return;
-  }
-  
-  // Add the pick
-  const pick = {
-    id: Date.now(),
+  // Add to slip
+  betslip.push({
     fixtureId: fixture.id,
     homeTeam: fixture.homeTeam,
     awayTeam: fixture.awayTeam,
@@ -378,47 +382,160 @@ function pickFixture(fixtureId) {
     kickoff: fixture.commenceTime,
     probability: fixture.probability,
     odds: fixture.btts?.yes?.odds || (1 / fixture.probability * 0.92),
-    stake: stake,
+  });
+  
+  saveBetslip();
+  updateSlipButton(fixtureId, true);
+  renderBetslip();
+  
+  // Show betslip toggle
+  document.getElementById('betslipToggle').style.display = 'flex';
+}
+
+function removeFromSlip(fixtureId) {
+  loadBetslip();
+  betslip = betslip.filter(s => s.fixtureId !== fixtureId);
+  saveBetslip();
+  updateSlipButton(fixtureId, false);
+  renderBetslip();
+}
+
+function updateSlipButton(fixtureId, inSlip) {
+  const btn = document.getElementById(`slip-btn-${fixtureId}`);
+  if (btn) {
+    if (inSlip) {
+      btn.textContent = '✓ In Slip';
+      btn.classList.add('added');
+    } else {
+      btn.textContent = '+ Add to Slip';
+      btn.classList.remove('added');
+    }
+  }
+}
+
+function calculateAccumulatorOdds() {
+  if (betslip.length === 0) return 0;
+  return betslip.reduce((acc, s) => acc * s.odds, 1);
+}
+
+function renderBetslip() {
+  loadBetslip();
+  
+  const content = document.getElementById('betslipContent');
+  const footer = document.getElementById('betslipFooter');
+  const countEl = document.getElementById('betslipCount');
+  const toggle = document.getElementById('betslipToggle');
+  
+  countEl.textContent = betslip.length;
+  
+  if (betslip.length === 0) {
+    toggle.style.display = 'none';
+    document.getElementById('betslipPanel').classList.remove('open');
+    content.innerHTML = `
+      <div class="betslip-empty">
+        <p>No selections yet</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Click "Add to Slip" on any fixture</p>
+      </div>
+    `;
+    footer.style.display = 'none';
+    return;
+  }
+  
+  toggle.style.display = 'flex';
+  footer.style.display = 'block';
+  
+  const combinedOdds = calculateAccumulatorOdds();
+  document.getElementById('slipSelections').textContent = betslip.length;
+  document.getElementById('slipOdds').textContent = combinedOdds.toFixed(2);
+  
+  content.innerHTML = betslip.map(s => `
+    <div class="betslip-item">
+      <button class="remove" onclick="removeFromSlip('${s.fixtureId}')">✕</button>
+      <div class="match">${s.homeTeam} vs ${s.awayTeam}</div>
+      <div class="league">${s.league} • BTTS Yes</div>
+      <div class="odds">@ ${s.odds.toFixed(2)}</div>
+    </div>
+  `).join('');
+  
+  updateReturns();
+}
+
+function updateReturns() {
+  const stake = parseFloat(document.getElementById('stakeInput')?.value) || 0;
+  const combinedOdds = calculateAccumulatorOdds();
+  const returns = stake * combinedOdds;
+  document.getElementById('slipReturns').textContent = `£${returns.toFixed(2)}`;
+}
+
+function placeBet() {
+  loadBetslip();
+  
+  if (betslip.length === 0) return;
+  
+  const stake = parseFloat(document.getElementById('stakeInput')?.value) || 0;
+  if (stake <= 0) {
+    alert('Please enter a valid stake');
+    return;
+  }
+  
+  const combinedOdds = calculateAccumulatorOdds();
+  const combinedProb = betslip.reduce((acc, s) => acc * s.probability, 1);
+  
+  // Save to My Picks
+  const PICKS_KEY = 'btts_my_picks';
+  const saved = localStorage.getItem(PICKS_KEY);
+  const data = saved ? JSON.parse(saved) : { picks: [] };
+  
+  const accaPick = {
+    id: Date.now(),
+    type: 'accumulator',
+    selections: betslip.map(s => ({
+      fixtureId: s.fixtureId,
+      homeTeam: s.homeTeam,
+      awayTeam: s.awayTeam,
+      league: s.league,
+      kickoff: s.kickoff,
+      probability: s.probability,
+      odds: s.odds,
+    })),
+    combinedOdds,
+    combinedProbability: combinedProb,
+    stake,
+    potentialReturns: stake * combinedOdds,
     pickedAt: new Date().toISOString(),
     status: 'pending',
     result: null,
   };
   
-  data.picks.push(pick);
+  data.picks.push(accaPick);
   localStorage.setItem(PICKS_KEY, JSON.stringify(data));
   
-  // Update button state
-  const btn = document.getElementById(`pick-btn-${fixtureId}`);
-  if (btn) {
-    btn.textContent = '✓ Picked';
-    btn.classList.add('picked');
-    btn.onclick = null;
-  }
+  // Clear betslip
+  betslip = [];
+  saveBetslip();
   
-  // Show confirmation
-  const potential = (stake * pick.odds).toFixed(2);
-  alert(`Pick added!\n\n${fixture.homeTeam} vs ${fixture.awayTeam}\nStake: £${stake.toFixed(2)}\nOdds: ${pick.odds.toFixed(2)}\nPotential return: £${potential}`);
+  // Reset buttons
+  accaPick.selections.forEach(s => updateSlipButton(s.fixtureId, false));
+  
+  // Close panel
+  document.getElementById('betslipPanel').classList.remove('open');
+  renderBetslip();
+  
+  // Confirmation
+  const selectionsText = accaPick.selections.map(s => `${s.homeTeam} vs ${s.awayTeam}`).join('\n');
+  alert(`Accumulator saved!\n\n${accaPick.selections.length} selections:\n${selectionsText}\n\nCombined odds: ${combinedOdds.toFixed(2)}\nStake: £${stake.toFixed(2)}\nPotential returns: £${(stake * combinedOdds).toFixed(2)}`);
 }
 
-// Make pickFixture available globally
-window.pickFixture = pickFixture;
-
-// Update picked buttons on render
-function updatePickedButtons() {
-  const PICKS_KEY = 'btts_my_picks';
-  const saved = localStorage.getItem(PICKS_KEY);
-  if (!saved) return;
-  
-  const data = JSON.parse(saved);
-  data.picks.forEach(pick => {
-    const btn = document.getElementById(`pick-btn-${pick.fixtureId}`);
-    if (btn && pick.status === 'pending') {
-      btn.textContent = '✓ Picked';
-      btn.classList.add('picked');
-      btn.onclick = null;
-    }
-  });
+// Update slip buttons on render
+function updateSlipButtons() {
+  loadBetslip();
+  betslip.forEach(s => updateSlipButton(s.fixtureId, true));
 }
+
+// Make functions global
+window.addToSlip = addToSlip;
+window.removeFromSlip = removeFromSlip;
+window.placeBet = placeBet;
 
 function renderStats(data, filteredFixtures) {
   const fixtures = filteredFixtures || data.fixtures;
@@ -508,8 +625,8 @@ function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'al
   grid.innerHTML = filtered.map(f => renderFixture(f)).join('');
   renderStats(data, filtered);
   
-  // Update picked buttons after rendering
-  setTimeout(updatePickedButtons, 0);
+  // Update slip buttons after rendering
+  setTimeout(updateSlipButtons, 0);
 }
 
 function renderMethodology(data) {
@@ -597,6 +714,44 @@ async function init() {
       renderFixtures(data, state.filter, state.sort, state.topN, dateFilter.value);
     });
   }
+  
+  // Set up betslip UI
+  const betslipToggle = document.getElementById('betslipToggle');
+  const betslipPanel = document.getElementById('betslipPanel');
+  const betslipClose = document.getElementById('betslipClose');
+  const stakeInput = document.getElementById('stakeInput');
+  const placeBetBtn = document.getElementById('placeBetBtn');
+  
+  if (betslipToggle) {
+    betslipToggle.addEventListener('click', () => {
+      betslipPanel.classList.toggle('open');
+    });
+  }
+  
+  if (betslipClose) {
+    betslipClose.addEventListener('click', () => {
+      betslipPanel.classList.remove('open');
+    });
+  }
+  
+  if (stakeInput) {
+    stakeInput.addEventListener('input', updateReturns);
+  }
+  
+  if (placeBetBtn) {
+    placeBetBtn.addEventListener('click', placeBet);
+  }
+  
+  // Stake presets
+  document.querySelectorAll('.stake-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('stakeInput').value = btn.dataset.stake;
+      updateReturns();
+    });
+  });
+  
+  // Initial betslip render
+  renderBetslip();
 }
 
 init();

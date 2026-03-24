@@ -512,6 +512,269 @@
       white-space: nowrap;
     }
     
+    /* Floating Betslip */
+    .betslip-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #16a34a);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .betslip-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .betslip-toggle .count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .betslip-panel {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 380px;
+      max-height: 80vh;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.5);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+    }
+    
+    .betslip-panel.open {
+      display: flex;
+    }
+    
+    .betslip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .betslip-header h3 {
+      font-size: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .betslip-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+    
+    .betslip-close:hover { color: var(--text); }
+    
+    .betslip-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+    
+    .betslip-empty {
+      text-align: center;
+      color: var(--text-dim);
+      padding: 2rem;
+    }
+    
+    .betslip-item {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    
+    .betslip-item .match {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.85rem;
+      padding-right: 1.5rem;
+    }
+    
+    .betslip-item .league {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+    
+    .betslip-item .odds {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+    
+    .betslip-item .remove {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.25rem;
+    }
+    
+    .betslip-item .remove:hover { color: #f87171; }
+    
+    .betslip-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+    
+    .betslip-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+    
+    .betslip-summary .label { color: var(--text-muted); }
+    .betslip-summary .value { color: var(--text); font-weight: 600; }
+    .betslip-summary .value.highlight { color: var(--gold); font-size: 1.1rem; }
+    
+    .betslip-stake {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .betslip-stake input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: var(--text);
+      font-size: 1rem;
+    }
+    
+    .betslip-stake input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    .stake-presets {
+      display: flex;
+      gap: 0.25rem;
+    }
+    
+    .stake-preset {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    
+    .stake-preset:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+    
+    .betslip-place {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #16a34a);
+      border: none;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .betslip-place:hover {
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    
+    .betslip-place:disabled {
+      background: var(--border);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .add-to-slip {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      margin-top: 0;
+      white-space: nowrap;
+    }
+    
+    .add-to-slip:hover {
+      background: rgba(34, 197, 94, 0.1);
+    }
+    
+    .add-to-slip.added {
+      background: var(--accent);
+      color: white;
+    }
+    
+    @media (max-width: 500px) {
+      .betslip-panel {
+        width: 100%;
+        border-radius: 16px 16px 0 0;
+      }
+      
+      .betslip-toggle {
+        bottom: 1rem;
+        right: 1rem;
+      }
+    }
+    
     .expand-btn.expanded {
       background: var(--accent);
       border-color: var(--accent);
@@ -846,6 +1109,49 @@
     </div>
     
     <p class="last-updated" id="lastUpdated"></p>
+  </div>
+  
+  <!-- Floating Betslip Toggle -->
+  <button class="betslip-toggle" id="betslipToggle" style="display: none;">
+    🎫
+    <span class="count" id="betslipCount">0</span>
+  </button>
+  
+  <!-- Betslip Panel -->
+  <div class="betslip-panel" id="betslipPanel">
+    <div class="betslip-header">
+      <h3>🎫 Accumulator</h3>
+      <button class="betslip-close" id="betslipClose">✕</button>
+    </div>
+    <div class="betslip-content" id="betslipContent">
+      <div class="betslip-empty">
+        <p>No selections yet</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Click "Add to Slip" on any fixture</p>
+      </div>
+    </div>
+    <div class="betslip-footer" id="betslipFooter" style="display: none;">
+      <div class="betslip-summary">
+        <span class="label">Selections</span>
+        <span class="value" id="slipSelections">0</span>
+      </div>
+      <div class="betslip-summary">
+        <span class="label">Combined Odds</span>
+        <span class="value highlight" id="slipOdds">-</span>
+      </div>
+      <div class="betslip-stake">
+        <input type="number" id="stakeInput" placeholder="Stake (£)" min="0.01" step="0.01" value="1">
+        <div class="stake-presets">
+          <button class="stake-preset" data-stake="1">£1</button>
+          <button class="stake-preset" data-stake="5">£5</button>
+          <button class="stake-preset" data-stake="10">£10</button>
+        </div>
+      </div>
+      <div class="betslip-summary">
+        <span class="label">Potential Returns</span>
+        <span class="value highlight" id="slipReturns">£0.00</span>
+      </div>
+      <button class="betslip-place" id="placeBetBtn">Save to My Picks</button>
+    </div>
   </div>
   
   <script type="module" src="/src/main.js"></script>
