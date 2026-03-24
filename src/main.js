@@ -223,10 +223,15 @@ function renderFixture(fixture, showRank = true) {
           </div>
         </div>
         
-        <button class="expand-btn" onclick="toggleDetails('${fixture.id}')">
-          <span class="expand-text">Show Analysis</span>
-          <span class="expand-icon">▼</span>
-        </button>
+        <div class="card-actions">
+          <button class="expand-btn" onclick="toggleDetails('${fixture.id}')">
+            <span class="expand-text">Show Analysis</span>
+            <span class="expand-icon">▼</span>
+          </button>
+          <button class="pick-btn" onclick="pickFixture('${fixture.id}')" id="pick-btn-${fixture.id}">
+            🎯 Pick This
+          </button>
+        </div>
         
         <div class="expanded-details" id="details-${fixture.id}">
           <div class="analysis-section">
@@ -333,6 +338,88 @@ function toggleDetails(fixtureId) {
 // Make toggleDetails available globally
 window.toggleDetails = toggleDetails;
 
+// Store current data for picking
+let currentData = null;
+
+// Pick fixture function
+function pickFixture(fixtureId) {
+  if (!currentData) return;
+  
+  const fixture = currentData.fixtures.find(f => f.id === fixtureId);
+  if (!fixture) return;
+  
+  // Check if already picked
+  const PICKS_KEY = 'btts_my_picks';
+  const saved = localStorage.getItem(PICKS_KEY);
+  const data = saved ? JSON.parse(saved) : { picks: [] };
+  
+  if (data.picks.find(p => p.fixtureId === fixtureId)) {
+    alert('Already picked this fixture! View in My Picks.');
+    return;
+  }
+  
+  // Prompt for stake
+  const stakeInput = prompt('Enter stake amount (£):', '1');
+  if (stakeInput === null) return;
+  
+  const stake = parseFloat(stakeInput);
+  if (isNaN(stake) || stake <= 0) {
+    alert('Please enter a valid stake amount');
+    return;
+  }
+  
+  // Add the pick
+  const pick = {
+    id: Date.now(),
+    fixtureId: fixture.id,
+    homeTeam: fixture.homeTeam,
+    awayTeam: fixture.awayTeam,
+    league: fixture.league,
+    kickoff: fixture.commenceTime,
+    probability: fixture.probability,
+    odds: fixture.btts?.yes?.odds || (1 / fixture.probability * 0.92),
+    stake: stake,
+    pickedAt: new Date().toISOString(),
+    status: 'pending',
+    result: null,
+  };
+  
+  data.picks.push(pick);
+  localStorage.setItem(PICKS_KEY, JSON.stringify(data));
+  
+  // Update button state
+  const btn = document.getElementById(`pick-btn-${fixtureId}`);
+  if (btn) {
+    btn.textContent = '✓ Picked';
+    btn.classList.add('picked');
+    btn.onclick = null;
+  }
+  
+  // Show confirmation
+  const potential = (stake * pick.odds).toFixed(2);
+  alert(`Pick added!\n\n${fixture.homeTeam} vs ${fixture.awayTeam}\nStake: £${stake.toFixed(2)}\nOdds: ${pick.odds.toFixed(2)}\nPotential return: £${potential}`);
+}
+
+// Make pickFixture available globally
+window.pickFixture = pickFixture;
+
+// Update picked buttons on render
+function updatePickedButtons() {
+  const PICKS_KEY = 'btts_my_picks';
+  const saved = localStorage.getItem(PICKS_KEY);
+  if (!saved) return;
+  
+  const data = JSON.parse(saved);
+  data.picks.forEach(pick => {
+    const btn = document.getElementById(`pick-btn-${pick.fixtureId}`);
+    if (btn && pick.status === 'pending') {
+      btn.textContent = '✓ Picked';
+      btn.classList.add('picked');
+      btn.onclick = null;
+    }
+  });
+}
+
 function renderStats(data, filteredFixtures) {
   const fixtures = filteredFixtures || data.fixtures;
   const total = fixtures.length;
@@ -420,6 +507,9 @@ function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'al
   
   grid.innerHTML = filtered.map(f => renderFixture(f)).join('');
   renderStats(data, filtered);
+  
+  // Update picked buttons after rendering
+  setTimeout(updatePickedButtons, 0);
 }
 
 function renderMethodology(data) {
@@ -453,6 +543,9 @@ async function init() {
   const fetchedAt = new Date(data.fetchedAt);
   const sourceLabel = data.source === 'live' ? '🔴 Live Data' : data.source === 'historic' ? '📊 Historic Model' : '🎲 Demo Data';
   lastUpdated.textContent = `Last updated: ${fetchedAt.toLocaleString('en-GB')} • ${sourceLabel}`;
+  
+  // Store data for picking
+  currentData = data;
   
   // Render methodology
   renderMethodology(data);

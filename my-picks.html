@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTTS Tracker | My Picks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg-elevated: #111827;
+      --card: #1a1f2e;
+      --card-hover: #242938;
+      --border: #2d3548;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #22c55e;
+      --accent-dim: #166534;
+      --accent-glow: rgba(34, 197, 94, 0.3);
+      --warning: #eab308;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --blue: #3b82f6;
+      --teal: #14b8a6;
+      --gold: #fbbf24;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle { color: var(--text-muted); font-size: 1rem; }
+    
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    
+    nav a:hover { color: var(--text); background: var(--card); }
+    nav a.active { color: var(--accent); background: var(--card); }
+    
+    .content { padding: 2rem 0; }
+    
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    
+    .stat-card.highlight {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    
+    .stat-card.profit { border-color: var(--accent); }
+    .stat-card.loss { border-color: var(--danger); }
+    
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+    }
+    
+    .stat-value.green { color: var(--accent); }
+    .stat-value.red { color: var(--danger); }
+    .stat-value.gold { color: var(--gold); }
+    .stat-value.blue { color: var(--blue); }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section h2 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .picks-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .picks-table th {
+      text-align: left;
+      padding: 0.75rem;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .picks-table td {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    
+    .picks-table tr:hover { background: rgba(255,255,255,0.02); }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    
+    .status-badge.pending { background: rgba(234, 179, 8, 0.2); color: var(--warning); }
+    .status-badge.won { background: rgba(34, 197, 94, 0.2); color: var(--accent); }
+    .status-badge.lost { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+    
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    .remove-btn:hover { background: rgba(239, 68, 68, 0.1); }
+    
+    .empty-state {
+      text-align: center;
+      color: var(--text-dim);
+      padding: 3rem;
+    }
+    
+    .empty-state p { margin-bottom: 0.5rem; }
+    
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .rec-card {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .rec-card.warning { border-left-color: var(--warning); }
+    .rec-card.danger { border-left-color: var(--danger); }
+    .rec-card.info { border-left-color: var(--blue); }
+    
+    .rec-card .title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .rec-card .desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    
+    .week-filter {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .week-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    
+    .week-btn:hover { border-color: var(--text-dim); color: var(--text); }
+    .week-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(34, 197, 94, 0.1); }
+    
+    .profit-chart {
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 1rem 0;
+    }
+    
+    .chart-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      min-height: 4px;
+      transition: height 0.3s;
+    }
+    
+    .chart-bar.positive { background: linear-gradient(to top, var(--accent-dim), var(--accent)); }
+    .chart-bar.negative { background: linear-gradient(to top, #991b1b, var(--danger)); }
+    
+    @media (max-width: 900px) {
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .recommendations { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .picks-table { font-size: 0.8rem; }
+      .picks-table th, .picks-table td { padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="container">
+      <h1>🎯 My Picks</h1>
+      <p class="subtitle">Track your selections and performance</p>
+      <nav>
+        <a href="/">Predictions</a>
+        <a href="/accuracy.html">Accuracy</a>
+        <a href="/my-picks.html" class="active">My Picks</a>
+        <a href="/model-history.html">Model History</a>
+        <a href="/how-it-works.html">How It Works</a>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="container content">
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card highlight">
+        <div class="stat-value green" id="totalPL">£0.00</div>
+        <div class="stat-label">Total P&L</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value gold" id="winRate">0%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value blue" id="totalPicks">0</div>
+        <div class="stat-label">Total Picks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="pendingPicks">0</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="avgOdds">-</div>
+        <div class="stat-label">Avg Odds</div>
+      </div>
+    </div>
+    
+    <div class="section" id="recommendationsSection" style="display: none;">
+      <h2>💡 Recommendations</h2>
+      <div class="recommendations" id="recommendations"></div>
+    </div>
+    
+    <div class="section">
+      <h2>📊 Weekly P&L</h2>
+      <div class="profit-chart" id="profitChart"></div>
+    </div>
+    
+    <div class="section">
+      <h2>📋 My Selections</h2>
+      <div class="week-filter" id="weekFilter">
+        <button class="week-btn active" data-filter="all">All Time</button>
+        <button class="week-btn" data-filter="week">This Week</button>
+        <button class="week-btn" data-filter="pending">Pending</button>
+        <button class="week-btn" data-filter="settled">Settled</button>
+      </div>
+      <div id="picksContainer">
+        <div class="empty-state">
+          <p>No picks yet</p>
+          <p style="font-size: 0.85rem;">Go to <a href="/" style="color: var(--accent);">Predictions</a> and click "Pick This" on any fixture</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Local storage key
+    const PICKS_KEY = 'btts_my_picks';
+    
+    function loadPicks() {
+      const saved = localStorage.getItem(PICKS_KEY);
+      return saved ? JSON.parse(saved) : { picks: [], stats: {} };
+    }
+    
+    function savePicks(data) {
+      localStorage.setItem(PICKS_KEY, JSON.stringify(data));
+    }
+    
+    function addPick(pick) {
+      const data = loadPicks();
+      
+      // Check if already picked
+      if (data.picks.find(p => p.fixtureId === pick.fixtureId)) {
+        alert('Already picked this fixture!');
+        return false;
+      }
+      
+      data.picks.push({
+        ...pick,
+        id: Date.now(),
+        pickedAt: new Date().toISOString(),
+        status: 'pending',
+        result: null,
+      });
+      
+      savePicks(data);
+      return true;
+    }
+    
+    function removePick(pickId) {
+      const data = loadPicks();
+      data.picks = data.picks.filter(p => p.id !== pickId);
+      savePicks(data);
+      renderPicks();
+    }
+    
+    function settlePick(pickId, won, actualScore) {
+      const data = loadPicks();
+      const pick = data.picks.find(p => p.id === pickId);
+      if (pick) {
+        pick.status = won ? 'won' : 'lost';
+        pick.result = {
+          won,
+          actualScore,
+          settledAt: new Date().toISOString(),
+          returns: won ? pick.stake * pick.odds : 0,
+          profit: won ? (pick.stake * pick.odds) - pick.stake : -pick.stake,
+        };
+      }
+      savePicks(data);
+      renderPicks();
+    }
+    
+    function calculateStats(picks) {
+      const settled = picks.filter(p => p.status !== 'pending');
+      const pending = picks.filter(p => p.status === 'pending');
+      const won = picks.filter(p => p.status === 'won');
+      const lost = picks.filter(p => p.status === 'lost');
+      
+      const totalStaked = settled.reduce((sum, p) => sum + p.stake, 0);
+      const totalReturns = won.reduce((sum, p) => sum + (p.result?.returns || 0), 0);
+      const totalPL = totalReturns - totalStaked;
+      
+      const winRate = settled.length > 0 ? (won.length / settled.length) * 100 : 0;
+      const avgOdds = picks.length > 0 
+        ? picks.reduce((sum, p) => sum + p.odds, 0) / picks.length 
+        : 0;
+      
+      return {
+        totalPicks: picks.length,
+        pending: pending.length,
+        won: won.length,
+        lost: lost.length,
+        totalStaked,
+        totalReturns,
+        totalPL,
+        winRate,
+        avgOdds,
+      };
+    }
+    
+    function generateRecommendations(picks) {
+      const recs = [];
+      const stats = calculateStats(picks);
+      const settled = picks.filter(p => p.status !== 'pending');
+      
+      if (settled.length < 5) {
+        recs.push({
+          type: 'info',
+          title: 'Keep picking!',
+          desc: `Need at least 5 settled picks for recommendations. Currently have ${settled.length}.`
+        });
+        return recs;
+      }
+      
+      // Win rate analysis
+      if (stats.winRate >= 60) {
+        recs.push({
+          type: 'success',
+          title: '🔥 Great win rate!',
+          desc: `Your ${stats.winRate.toFixed(0)}% win rate is above the model average. Keep it up!`
+        });
+      } else if (stats.winRate < 45) {
+        recs.push({
+          type: 'warning',
+          title: 'Win rate below average',
+          desc: `At ${stats.winRate.toFixed(0)}%, consider sticking to Top 3 picks only.`
+        });
+      }
+      
+      // Analyze by probability band
+      const highProb = settled.filter(p => p.probability >= 0.60);
+      const lowProb = settled.filter(p => p.probability < 0.50);
+      
+      if (highProb.length >= 3) {
+        const highWinRate = highProb.filter(p => p.status === 'won').length / highProb.length;
+        if (highWinRate >= 0.65) {
+          recs.push({
+            type: 'success',
+            title: 'High probability picks working',
+            desc: `${(highWinRate * 100).toFixed(0)}% win rate on 60%+ predictions. Focus here.`
+          });
+        }
+      }
+      
+      if (lowProb.length >= 3) {
+        const lowWinRate = lowProb.filter(p => p.status === 'won').length / lowProb.length;
+        if (lowWinRate < 0.40) {
+          recs.push({
+            type: 'danger',
+            title: 'Avoid low probability picks',
+            desc: `Only ${(lowWinRate * 100).toFixed(0)}% win rate on sub-50% predictions. Skip these.`
+          });
+        }
+      }
+      
+      // Stake consistency
+      const stakes = settled.map(p => p.stake);
+      const avgStake = stakes.reduce((a, b) => a + b, 0) / stakes.length;
+      const stakeVariance = stakes.reduce((sum, s) => sum + Math.abs(s - avgStake), 0) / stakes.length;
+      
+      if (stakeVariance > avgStake * 0.3) {
+        recs.push({
+          type: 'warning',
+          title: 'Inconsistent stake sizing',
+          desc: 'Your stakes vary significantly. Consider flat staking for better bankroll management.'
+        });
+      }
+      
+      // League analysis
+      const byLeague = {};
+      settled.forEach(p => {
+        if (!byLeague[p.league]) byLeague[p.league] = { total: 0, won: 0 };
+        byLeague[p.league].total++;
+        if (p.status === 'won') byLeague[p.league].won++;
+      });
+      
+      let bestLeague = null, worstLeague = null;
+      Object.entries(byLeague).forEach(([league, data]) => {
+        if (data.total >= 3) {
+          const rate = data.won / data.total;
+          if (!bestLeague || rate > bestLeague.rate) bestLeague = { league, rate, ...data };
+          if (!worstLeague || rate < worstLeague.rate) worstLeague = { league, rate, ...data };
+        }
+      });
+      
+      if (bestLeague && bestLeague.rate >= 0.65) {
+        recs.push({
+          type: 'success',
+          title: `${bestLeague.league} is your best league`,
+          desc: `${(bestLeague.rate * 100).toFixed(0)}% win rate. Consider focusing picks here.`
+        });
+      }
+      
+      if (worstLeague && worstLeague.rate < 0.40 && worstLeague.league !== bestLeague?.league) {
+        recs.push({
+          type: 'danger',
+          title: `Avoid ${worstLeague.league}`,
+          desc: `Only ${(worstLeague.rate * 100).toFixed(0)}% win rate. Your picks here aren't hitting.`
+        });
+      }
+      
+      return recs;
+    }
+    
+    function renderStats(stats) {
+      const plClass = stats.totalPL >= 0 ? 'green' : 'red';
+      document.getElementById('totalPL').textContent = `£${stats.totalPL.toFixed(2)}`;
+      document.getElementById('totalPL').className = `stat-value ${plClass}`;
+      
+      document.getElementById('winRate').textContent = `${stats.winRate.toFixed(0)}%`;
+      document.getElementById('totalPicks').textContent = stats.totalPicks;
+      document.getElementById('pendingPicks').textContent = stats.pending;
+      document.getElementById('avgOdds').textContent = stats.avgOdds > 0 ? stats.avgOdds.toFixed(2) : '-';
+    }
+    
+    function renderRecommendations(picks) {
+      const recs = generateRecommendations(picks);
+      const container = document.getElementById('recommendations');
+      const section = document.getElementById('recommendationsSection');
+      
+      if (recs.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+      
+      section.style.display = 'block';
+      
+      container.innerHTML = recs.map(r => `
+        <div class="rec-card ${r.type === 'success' ? '' : r.type}">
+          <div class="title">${r.title}</div>
+          <div class="desc">${r.desc}</div>
+        </div>
+      `).join('');
+    }
+    
+    function renderProfitChart(picks) {
+      const container = document.getElementById('profitChart');
+      
+      // Group by week
+      const byWeek = {};
+      picks.filter(p => p.status !== 'pending').forEach(p => {
+        const date = new Date(p.result?.settledAt || p.pickedAt);
+        const weekStart = new Date(date);
+        weekStart.setDate(date.getDate() - date.getDay());
+        const weekKey = weekStart.toISOString().split('T')[0];
+        
+        if (!byWeek[weekKey]) byWeek[weekKey] = 0;
+        byWeek[weekKey] += p.result?.profit || 0;
+      });
+      
+      const weeks = Object.entries(byWeek).sort((a, b) => a[0].localeCompare(b[0])).slice(-12);
+      
+      if (weeks.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: var(--text-dim); width: 100%;">No settled picks yet</div>';
+        return;
+      }
+      
+      const maxAbs = Math.max(...weeks.map(([_, v]) => Math.abs(v)), 1);
+      
+      container.innerHTML = weeks.map(([week, profit]) => {
+        const height = Math.abs(profit) / maxAbs * 150 + 10;
+        const className = profit >= 0 ? 'positive' : 'negative';
+        const weekLabel = new Date(week).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        return `
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div class="chart-bar ${className}" style="height: ${height}px;" title="Week of ${weekLabel}: £${profit.toFixed(2)}"></div>
+            <div style="font-size: 0.6rem; color: var(--text-dim); margin-top: 4px;">${weekLabel}</div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function renderPicksTable(picks, filter = 'all') {
+      let filtered = picks;
+      
+      if (filter === 'week') {
+        const weekAgo = new Date();
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        filtered = picks.filter(p => new Date(p.pickedAt) >= weekAgo);
+      } else if (filter === 'pending') {
+        filtered = picks.filter(p => p.status === 'pending');
+      } else if (filter === 'settled') {
+        filtered = picks.filter(p => p.status !== 'pending');
+      }
+      
+      const container = document.getElementById('picksContainer');
+      
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>No picks for this filter</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = `
+        <table class="picks-table">
+          <thead>
+            <tr>
+              <th>Match</th>
+              <th>League</th>
+              <th>Prob</th>
+              <th>Odds</th>
+              <th>Stake</th>
+              <th>Status</th>
+              <th>P&L</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map(p => {
+              const pl = p.result ? p.result.profit : null;
+              const plText = pl !== null ? `£${pl >= 0 ? '+' : ''}${pl.toFixed(2)}` : '-';
+              const plClass = pl === null ? '' : pl >= 0 ? 'style="color: var(--accent)"' : 'style="color: var(--danger)"';
+              
+              return `
+                <tr>
+                  <td>
+                    <strong>${p.homeTeam}</strong> vs <strong>${p.awayTeam}</strong>
+                    <div style="font-size: 0.75rem; color: var(--text-dim);">${new Date(p.kickoff).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}</div>
+                  </td>
+                  <td>${p.league}</td>
+                  <td>${(p.probability * 100).toFixed(0)}%</td>
+                  <td>${p.odds.toFixed(2)}</td>
+                  <td>£${p.stake.toFixed(2)}</td>
+                  <td><span class="status-badge ${p.status}">${p.status}</span></td>
+                  <td ${plClass}>${plText}</td>
+                  <td>
+                    <button class="remove-btn" onclick="removePick(${p.id})" title="Remove">✕</button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+    
+    function renderPicks(filter = 'all') {
+      const data = loadPicks();
+      const stats = calculateStats(data.picks);
+      
+      renderStats(stats);
+      renderRecommendations(data.picks);
+      renderProfitChart(data.picks);
+      renderPicksTable(data.picks, filter);
+    }
+    
+    // Make functions global
+    window.removePick = removePick;
+    window.addPick = addPick;
+    window.settlePick = settlePick;
+    
+    // Filter buttons
+    document.querySelectorAll('.week-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderPicks(btn.dataset.filter);
+      });
+    });
+    
+    // Initialize
+    renderPicks();
+  </script>
+</body>
+</html>

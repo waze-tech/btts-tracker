@@ -468,6 +468,50 @@
       color: var(--text);
     }
     
+    .pick-btn {
+      background: linear-gradient(135deg, var(--accent), #16a34a);
+      border: none;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      margin-top: 0.75rem;
+    }
+    
+    .pick-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    
+    .pick-btn.picked {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    
+    .card-actions .expand-btn {
+      flex: 1;
+      margin-top: 0;
+    }
+    
+    .card-actions .pick-btn {
+      margin-top: 0;
+      white-space: nowrap;
+    }
+    
     .expand-btn.expanded {
       background: var(--accent);
       border-color: var(--accent);
@@ -733,9 +777,12 @@
         <span style="color: var(--league1);">● League One</span>
         <span style="color: var(--league2);">● League Two</span>
       </p>
-      <nav style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-        <a href="/" style="color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; background: var(--card);">Predictions</a>
-        <a href="/accuracy.html" style="color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.color='var(--text)';this.style.background='var(--card)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='transparent'">Accuracy</a>
+      <nav style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+        <a href="/" style="color: var(--accent); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; background: var(--card);">Predictions</a>
+        <a href="/accuracy.html" style="color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; transition: all 0.2s;" onmouseover="this.style.color='var(--text)';this.style.background='var(--card)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='transparent'">Accuracy</a>
+        <a href="/my-picks.html" style="color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; transition: all 0.2s;" onmouseover="this.style.color='var(--text)';this.style.background='var(--card)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='transparent'">My Picks</a>
+        <a href="/model-history.html" style="color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; transition: all 0.2s;" onmouseover="this.style.color='var(--text)';this.style.background='var(--card)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='transparent'">Model History</a>
+        <a href="/how-it-works.html" style="color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; transition: all 0.2s;" onmouseover="this.style.color='var(--text)';this.style.background='var(--card)'" onmouseout="this.style.color='var(--text-muted)';this.style.background='transparent'">How It Works</a>
       </nav>
     </div>
   </div>
