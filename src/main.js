@@ -550,8 +550,12 @@ function renderStats(data, filteredFixtures) {
   document.getElementById('highConfidence').textContent = highConfidence;
 }
 
+// Custom date range state
+let customDateRange = null;
+let selectedTimeFilter = 'all';
+
 function filterByDate(fixtures, dateFilter) {
-  if (dateFilter === 'all') return fixtures;
+  if (dateFilter === 'all' && !customDateRange) return fixtures;
   
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -569,9 +573,14 @@ function filterByDate(fixtures, dateFilter) {
   const nextWeekEnd = new Date(nextWeekStart);
   nextWeekEnd.setDate(nextWeekStart.getDate() + 7);
   
-  return fixtures.filter(f => {
+  let filtered = fixtures.filter(f => {
     const fixtureDate = new Date(f.commenceTime);
     const fixtureDateOnly = new Date(fixtureDate.getFullYear(), fixtureDate.getMonth(), fixtureDate.getDate());
+    
+    // Custom date range takes priority
+    if (customDateRange) {
+      return fixtureDate >= customDateRange.from && fixtureDate <= customDateRange.to;
+    }
     
     switch (dateFilter) {
       case 'today':
@@ -586,7 +595,138 @@ function filterByDate(fixtures, dateFilter) {
         return true;
     }
   });
+  
+  // Apply time filter
+  if (selectedTimeFilter !== 'all') {
+    filtered = filtered.filter(f => {
+      const fixtureDate = new Date(f.commenceTime);
+      const timeStr = fixtureDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      return timeStr === selectedTimeFilter;
+    });
+  }
+  
+  return filtered;
 }
+
+// Update available kick-off times based on current fixtures
+function updateAvailableTimes(fixtures) {
+  const timeFilter = document.getElementById('timeFilter');
+  if (!timeFilter) return;
+  
+  // Get unique times from fixtures
+  const times = [...new Set(fixtures.map(f => {
+    const date = new Date(f.commenceTime);
+    return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  }))].sort();
+  
+  // Only show time filter if there are fixtures and more than one time
+  if (times.length <= 1) {
+    timeFilter.style.display = 'none';
+    return;
+  }
+  
+  timeFilter.style.display = 'block';
+  timeFilter.innerHTML = `
+    <option value="all">All Times</option>
+    ${times.map(t => `<option value="${t}" ${selectedTimeFilter === t ? 'selected' : ''}>${t}</option>`).join('')}
+  `;
+}
+
+// Open custom date modal
+function openDateModal() {
+  const modal = document.getElementById('dateModal');
+  const fromInput = document.getElementById('dateFrom');
+  const toInput = document.getElementById('dateTo');
+  
+  // Set default dates
+  const today = new Date();
+  const nextWeek = new Date(today);
+  nextWeek.setDate(nextWeek.getDate() + 7);
+  
+  fromInput.value = today.toISOString().split('T')[0];
+  toInput.value = nextWeek.toISOString().split('T')[0];
+  
+  modal.classList.add('open');
+}
+
+function closeDateModal() {
+  document.getElementById('dateModal').classList.remove('open');
+  // Reset dropdown if cancelled
+  if (!customDateRange) {
+    document.getElementById('dateFilter').value = 'all';
+  }
+}
+
+function applyCustomDateRange() {
+  const fromInput = document.getElementById('dateFrom');
+  const toInput = document.getElementById('dateTo');
+  
+  const fromDate = new Date(fromInput.value);
+  const toDate = new Date(toInput.value);
+  toDate.setHours(23, 59, 59, 999); // End of day
+  
+  if (fromDate > toDate) {
+    alert('From date must be before To date');
+    return;
+  }
+  
+  customDateRange = { from: fromDate, to: toDate };
+  
+  // Update UI
+  const badge = document.getElementById('activeFilterBadge');
+  const badgeText = document.getElementById('activeFilterText');
+  badgeText.textContent = `${fromDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} - ${toDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`;
+  badge.classList.add('show');
+  
+  closeDateModal();
+  
+  // Re-render with custom filter
+  if (currentData) {
+    const state = getFilterState();
+    // Get fixtures for this date range to populate times
+    const dateFiltered = filterByDateOnly(currentData.fixtures, customDateRange);
+    updateAvailableTimes(dateFiltered);
+    renderFixtures(currentData, state.filter, state.sort, state.topN, 'custom');
+  }
+}
+
+function filterByDateOnly(fixtures, range) {
+  if (!range) return fixtures;
+  return fixtures.filter(f => {
+    const fixtureDate = new Date(f.commenceTime);
+    return fixtureDate >= range.from && fixtureDate <= range.to;
+  });
+}
+
+function clearCustomFilter() {
+  customDateRange = null;
+  selectedTimeFilter = 'all';
+  
+  document.getElementById('activeFilterBadge').classList.remove('show');
+  document.getElementById('dateFilter').value = 'all';
+  document.getElementById('timeFilter').style.display = 'none';
+  
+  if (currentData) {
+    const state = getFilterState();
+    renderFixtures(currentData, state.filter, state.sort, state.topN, 'all');
+  }
+}
+
+// Global helper for getFilterState (needed in applyCustomDateRange)
+function getFilterState() {
+  return {
+    filter: document.querySelector('.filter-btn.active')?.dataset.filter || 'all',
+    sort: document.getElementById('sortSelect')?.value || 'probability',
+    topN: document.getElementById('topNSelect')?.value || 'all',
+    dateFilter: document.getElementById('dateFilter')?.value || 'all',
+  };
+}
+
+// Make functions global
+window.openDateModal = openDateModal;
+window.closeDateModal = closeDateModal;
+window.applyCustomDateRange = applyCustomDateRange;
+window.clearCustomFilter = clearCustomFilter;
 
 function renderFixtures(data, filter = 'all', sortBy = 'probability', topN = 'all', dateFilter = 'all') {
   const grid = document.getElementById('fixturesGrid');
@@ -670,13 +810,7 @@ async function init() {
   // Render initial fixtures (default to Top 3)
   renderFixtures(data, 'all', 'probability', '3');
   
-  // Helper to get current filter state
-  const getFilterState = () => ({
-    filter: document.querySelector('.filter-btn.active')?.dataset.filter || 'all',
-    sort: document.getElementById('sortSelect')?.value || 'probability',
-    topN: document.getElementById('topNSelect')?.value || 'all',
-    dateFilter: document.getElementById('dateFilter')?.value || 'all',
-  });
+  // getFilterState is now a global function
   
   // Set up filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -710,8 +844,28 @@ async function init() {
   const dateFilter = document.getElementById('dateFilter');
   if (dateFilter) {
     dateFilter.addEventListener('change', () => {
+      if (dateFilter.value === 'custom') {
+        openDateModal();
+      } else {
+        // Clear custom range if switching to preset
+        customDateRange = null;
+        selectedTimeFilter = 'all';
+        document.getElementById('activeFilterBadge').classList.remove('show');
+        document.getElementById('timeFilter').style.display = 'none';
+        
+        const state = getFilterState();
+        renderFixtures(data, state.filter, state.sort, state.topN, dateFilter.value);
+      }
+    });
+  }
+  
+  // Set up time filter
+  const timeFilter = document.getElementById('timeFilter');
+  if (timeFilter) {
+    timeFilter.addEventListener('change', () => {
+      selectedTimeFilter = timeFilter.value;
       const state = getFilterState();
-      renderFixtures(data, state.filter, state.sort, state.topN, dateFilter.value);
+      renderFixtures(data, state.filter, state.sort, state.topN, state.dateFilter);
     });
   }
   
