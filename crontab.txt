@@ -1,0 +1,11 @@
+# BTTS Tracker Cron Jobs
+# Install with: crontab ~/projects/btts-tracker/crontab.txt
+
+# Daily data fetch (6am GMT)
+0 6 * * * cd ~/projects/btts-tracker && node scripts/fetch-data.js >> ~/projects/btts-tracker/logs/fetch.log 2>&1
+
+# Auto-record results (11pm GMT - after evening matches)
+0 23 * * * cd ~/projects/btts-tracker && node scripts/auto-record.js >> ~/projects/btts-tracker/logs/auto-record.log 2>&1
+
+# Weekly review (Thursday 10am GMT) - model analysis + page audit + recommendations
+0 10 * * 4 cd ~/projects/btts-tracker && node scripts/weekly-review.js >> ~/projects/btts-tracker/logs/weekly-review.log 2>&1
