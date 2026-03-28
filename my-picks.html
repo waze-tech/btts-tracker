@@ -328,7 +328,10 @@
     </div>
     
     <div class="section">
-      <h2>📋 My Selections</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>📋 My Selections</h2>
+        <button onclick="clearAllPicks()" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">🗑️ Clear All Picks</button>
+      </div>
       <div class="week-filter" id="weekFilter">
         <button class="week-btn active" data-filter="all">All Time</button>
         <button class="week-btn" data-filter="week">This Week</button>
@@ -345,44 +348,95 @@
   </div>
   
   <script>
-    // Local storage key
-    const PICKS_KEY = 'btts_my_picks';
+    // API endpoint for server-side storage (proxied through Vite)
+    const API_BASE = '/api';
+    const PICKS_KEY = 'btts_my_picks'; // Fallback to localStorage
     
-    function loadPicks() {
+    // Try API first, fallback to localStorage
+    async function loadPicks() {
+      console.log('📥 Loading picks from API...');
+      try {
+        const res = await fetch(`${API_BASE}/picks`);
+        console.log('📥 API response:', res.status);
+        if (res.ok) {
+          const data = await res.json();
+          console.log('📥 Got picks:', data.picks?.length || 0);
+          // Sync to localStorage as backup
+          localStorage.setItem(PICKS_KEY, JSON.stringify(data));
+          return data;
+        }
+      } catch (e) {
+        console.log('❌ API unavailable:', e);
+      }
+      // Fallback to localStorage
+      console.log('📥 Falling back to localStorage');
       const saved = localStorage.getItem(PICKS_KEY);
       return saved ? JSON.parse(saved) : { picks: [], stats: {} };
     }
     
-    function savePicks(data) {
+    async function savePicks(data) {
       localStorage.setItem(PICKS_KEY, JSON.stringify(data));
     }
     
-    function addPick(pick) {
-      const data = loadPicks();
-      
-      // Check if already picked
-      if (data.picks.find(p => p.fixtureId === pick.fixtureId)) {
-        alert('Already picked this fixture!');
+    async function addPick(pick) {
+      try {
+        const res = await fetch(`${API_BASE}/picks`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(pick)
+        });
+        if (res.ok) {
+          const result = await res.json();
+          // Sync to localStorage
+          const data = await loadPicks();
+          localStorage.setItem(PICKS_KEY, JSON.stringify(data));
+          return true;
+        }
+        const err = await res.json();
+        alert(err.error || 'Failed to add pick');
         return false;
+      } catch (e) {
+        // Fallback to localStorage
+        const data = await loadPicks();
+        if (data.picks.find(p => p.fixtureId === pick.fixtureId)) {
+          alert('Already picked this fixture!');
+          return false;
+        }
+        data.picks.push({
+          ...pick,
+          id: Date.now(),
+          pickedAt: new Date().toISOString(),
+          status: 'pending',
+          result: null,
+        });
+        await savePicks(data);
+        return true;
       }
-      
-      data.picks.push({
-        ...pick,
-        id: Date.now(),
-        pickedAt: new Date().toISOString(),
-        status: 'pending',
-        result: null,
-      });
-      
-      savePicks(data);
-      return true;
     }
     
-    function removePick(pickId) {
-      const data = loadPicks();
+    async function removePick(pickId) {
+      try {
+        await fetch(`${API_BASE}/picks/${pickId}`, { method: 'DELETE' });
+      } catch (e) {
+        console.log('API unavailable, using localStorage');
+      }
+      const data = await loadPicks();
       data.picks = data.picks.filter(p => p.id !== pickId);
-      savePicks(data);
+      await savePicks(data);
       renderPicks();
+    }
+    
+    async function clearAllPicks() {
+      if (confirm('Are you sure you want to clear ALL picks? This cannot be undone.')) {
+        try {
+          await fetch(`${API_BASE}/picks`, { method: 'DELETE' });
+        } catch (e) {
+          console.log('API unavailable');
+        }
+        localStorage.removeItem(PICKS_KEY);
+        renderPicks();
+        alert('All picks cleared!');
+      }
     }
     
     function settlePick(pickId, won, actualScore) {
@@ -659,18 +713,25 @@
               const odds = isAcca ? p.combinedOdds : p.odds;
               const potential = (p.stake * odds).toFixed(2);
               const selections = isAcca 
-                ? p.selections.map(s => \`<div style="font-size: 0.8rem; margin-bottom: 0.25rem;">\${s.homeTeam} vs \${s.awayTeam}</div>\`).join('')
-                : \`<strong>\${p.homeTeam}</strong> vs <strong>\${p.awayTeam}</strong><div style="font-size: 0.75rem; color: var(--text-dim);">\${p.league}</div>\`;
-              const typeLabel = isAcca ? \`<span style="color: var(--gold); font-weight: 600;">\${p.selections.length}-fold</span>\` : 'Single';
+                ? p.selections.map(s => {
+                    // Frank's Pick - considers more than just probability
+                    const prob = s.probability || 0;
+                    let frankScore = prob >= 0.55 ? 2 : prob >= 0.50 ? 1 : prob < 0.45 ? -2 : -1;
+                    const frankPick = frankScore >= 1;
+                    const frankIcon = frankPick ? '<span style="color: var(--accent);">✓</span>' : '<span style="color: var(--danger);">✗</span>';
+                    return '<div style="font-size: 0.8rem; margin-bottom: 0.25rem;">' + frankIcon + ' ' + s.homeTeam + ' vs ' + s.awayTeam + ' <span style="color: var(--text-dim);">(' + (prob * 100).toFixed(0) + '%)</span></div>';
+                  }).join('')
+                : '<strong>' + p.homeTeam + '</strong> vs <strong>' + p.awayTeam + '</strong><div style="font-size: 0.75rem; color: var(--text-dim);">' + p.league + '</div>';
+              const typeLabel = isAcca ? '<span style="color: var(--gold); font-weight: 600;">' + p.selections.length + '-fold</span>' : 'Single';
               
-              return \`
+              return `
                 <tr>
-                  <td>\${typeLabel}</td>
-                  <td>\${selections}</td>
-                  <td style="color: var(--gold); font-weight: 600;">\${odds.toFixed(2)}</td>
-                  <td>£\${p.stake.toFixed(2)}</td>
-                  <td>£\${potential}</td>
-                  <td><span class="status-badge \${p.status}">\${p.status}</span></td>
+                  <td>${typeLabel}</td>
+                  <td>${selections}</td>
+                  <td style="color: var(--gold); font-weight: 600;">${odds.toFixed(2)}</td>
+                  <td>£${p.stake.toFixed(2)}</td>
+                  <td>£${potential}</td>
+                  <td><span class="status-badge ${p.status}">${p.status}</span></td>
                   <td ${plClass}>${plText}</td>
                   <td>
                     <button class="remove-btn" onclick="removePick(${p.id})" title="Remove">✕</button>
@@ -683,14 +744,14 @@
       `;
     }
     
-    function renderPicks(filter = 'all') {
-      const data = loadPicks();
-      const stats = calculateStats(data.picks);
+    async function renderPicks(filter = 'all') {
+      const data = await loadPicks();
+      const stats = calculateStats(data.picks || []);
       
       renderStats(stats);
-      renderRecommendations(data.picks);
-      renderProfitChart(data.picks);
-      renderPicksTable(data.picks, filter);
+      renderRecommendations(data.picks || []);
+      renderProfitChart(data.picks || []);
+      renderPicksTable(data.picks || [], filter);
     }
     
     // Make functions global

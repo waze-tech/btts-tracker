@@ -3,6 +3,100 @@
  * Displays comprehensive BTTS probability analysis
  */
 
+// Frank's Pick - Opinion-based BTTS prediction
+// Not just probability > 50%, but considers multiple factors
+function getFranksPick(fixture) {
+  const prob = fixture.probability;
+  const home = fixture.stats?.home;
+  const away = fixture.stats?.away;
+  const xG = fixture.expectedGoals?.total || 0;
+  const homeXG = fixture.expectedGoals?.home || 0;
+  const awayXG = fixture.expectedGoals?.away || 0;
+  
+  let score = 0;
+  let reasons = [];
+  
+  // 1. Base probability (weighted)
+  if (prob >= 0.55) {
+    score += 2;
+    reasons.push('Strong model confidence');
+  } else if (prob >= 0.50) {
+    score += 1;
+  } else if (prob < 0.45) {
+    score -= 2;
+    reasons.push('Low model confidence');
+  } else {
+    score -= 1;
+  }
+  
+  // 2. Both teams score regularly (BTTS rates)
+  if (home && away) {
+    const avgBtts = (home.bttsRate + away.bttsRate) / 2;
+    if (avgBtts >= 0.55) {
+      score += 2;
+      reasons.push('High BTTS history');
+    } else if (avgBtts < 0.45) {
+      score -= 1;
+    }
+    
+    // 3. Both teams can attack (low failed to score rate)
+    if (home.failedToScoreRate <= 0.20 && away.failedToScoreRate <= 0.25) {
+      score += 1;
+      reasons.push('Both find the net');
+    }
+    if (home.failedToScoreRate >= 0.30 || away.failedToScoreRate >= 0.35) {
+      score -= 2;
+      reasons.push('Scoring struggles');
+    }
+    
+    // 4. Leaky defenses (low clean sheet rate)
+    if (home.cleanSheetRate <= 0.25 && away.cleanSheetRate <= 0.25) {
+      score += 1;
+      reasons.push('Leaky defenses');
+    }
+    if (home.cleanSheetRate >= 0.40 || away.cleanSheetRate >= 0.40) {
+      score -= 1;
+    }
+    
+    // 5. Recent form (BTTS in last 5)
+    const homeFormBtts = home.form?.filter(x => x).length || 0;
+    const awayFormBtts = away.form?.filter(x => x).length || 0;
+    if (homeFormBtts >= 4 && awayFormBtts >= 4) {
+      score += 2;
+      reasons.push('Hot BTTS form');
+    } else if (homeFormBtts <= 1 || awayFormBtts <= 1) {
+      score -= 1;
+    }
+  }
+  
+  // 6. Expected goals - need both to score
+  if (homeXG >= 1.2 && awayXG >= 0.8) {
+    score += 1;
+    reasons.push('xG favours goals');
+  }
+  if (homeXG < 1.0 || awayXG < 0.5) {
+    score -= 1;
+  }
+  
+  // 7. Total xG suggests open game
+  if (xG >= 2.8) {
+    score += 1;
+  }
+  
+  // Make the call
+  const pick = score >= 1;
+  
+  // Generate reason text
+  let reason = '';
+  if (reasons.length > 0) {
+    reason = reasons.slice(0, 2).join(' • ');
+  } else {
+    reason = pick ? 'Marginal YES' : 'Marginal NO';
+  }
+  
+  return { pick, score, reason };
+}
+
 // Load data from the data folder
 async function loadData() {
   try {
@@ -185,7 +279,13 @@ function renderFixture(fixture, showRank = true) {
           </div>
         </div>
         
-        <div class="probability-section">
+        <div class="franks-pick" style="text-align: center; margin-bottom: 1rem; padding: 0.75rem; border-radius: 12px; background: ${getFranksPick(fixture).pick ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05))' : 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05))'}; border: 1px solid ${getFranksPick(fixture).pick ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'};">
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">🦉 Frank's Pick</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: ${getFranksPick(fixture).pick ? 'var(--accent)' : 'var(--danger)'};">${getFranksPick(fixture).pick ? '✓ YES' : '✗ NO'}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 0.25rem;">${getFranksPick(fixture).reason}</div>
+          </div>
+          
+          <div class="probability-section">
           <div class="main-prob">
             <div class="prob-ring ${probClass}">
               <svg viewBox="0 0 36 36">
@@ -467,7 +567,10 @@ function updateReturns() {
   document.getElementById('slipReturns').textContent = `£${returns.toFixed(2)}`;
 }
 
-function placeBet() {
+// API endpoint for server-side storage (proxied through Vite)
+const API_BASE = '/api';
+
+async function placeBet() {
   loadBetslip();
   
   if (betslip.length === 0) return;
@@ -481,13 +584,7 @@ function placeBet() {
   const combinedOdds = calculateAccumulatorOdds();
   const combinedProb = betslip.reduce((acc, s) => acc * s.probability, 1);
   
-  // Save to My Picks
-  const PICKS_KEY = 'btts_my_picks';
-  const saved = localStorage.getItem(PICKS_KEY);
-  const data = saved ? JSON.parse(saved) : { picks: [] };
-  
   const accaPick = {
-    id: Date.now(),
     type: 'accumulator',
     selections: betslip.map(s => ({
       fixtureId: s.fixtureId,
@@ -502,12 +599,44 @@ function placeBet() {
     combinedProbability: combinedProb,
     stake,
     potentialReturns: stake * combinedOdds,
+  };
+  
+  // Try to save to API first (server-side for model learning)
+  let savedToServer = false;
+  try {
+    console.log('📤 Saving pick to API...', accaPick);
+    const res = await fetch(`${API_BASE}/picks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(accaPick)
+    });
+    console.log('📥 API response status:', res.status);
+    if (res.ok) {
+      const result = await res.json();
+      console.log('✅ Pick saved to server:', result);
+      savedToServer = true;
+    } else {
+      const err = await res.text();
+      console.error('❌ API error:', err);
+    }
+  } catch (e) {
+    console.error('❌ API unavailable:', e);
+  }
+  
+  // Also save to localStorage as backup
+  const PICKS_KEY = 'btts_my_picks';
+  const saved = localStorage.getItem(PICKS_KEY);
+  const data = saved ? JSON.parse(saved) : { picks: [] };
+  
+  const localPick = {
+    ...accaPick,
+    id: Date.now(),
     pickedAt: new Date().toISOString(),
     status: 'pending',
     result: null,
   };
   
-  data.picks.push(accaPick);
+  data.picks.push(localPick);
   localStorage.setItem(PICKS_KEY, JSON.stringify(data));
   
   // Clear betslip
@@ -515,15 +644,16 @@ function placeBet() {
   saveBetslip();
   
   // Reset buttons
-  accaPick.selections.forEach(s => updateSlipButton(s.fixtureId, false));
+  localPick.selections.forEach(s => updateSlipButton(s.fixtureId, false));
   
   // Close panel
   document.getElementById('betslipPanel').classList.remove('open');
   renderBetslip();
   
   // Confirmation
-  const selectionsText = accaPick.selections.map(s => `${s.homeTeam} vs ${s.awayTeam}`).join('\n');
-  alert(`Accumulator saved!\n\n${accaPick.selections.length} selections:\n${selectionsText}\n\nCombined odds: ${combinedOdds.toFixed(2)}\nStake: £${stake.toFixed(2)}\nPotential returns: £${(stake * combinedOdds).toFixed(2)}`);
+  const selectionsText = localPick.selections.map(s => `${s.homeTeam} vs ${s.awayTeam}`).join('\n');
+  const serverStatus = savedToServer ? '✅ Saved to server' : '⚠️ Saved locally only';
+  alert(`Accumulator saved! ${serverStatus}\n\n${localPick.selections.length} selections:\n${selectionsText}\n\nCombined odds: ${combinedOdds.toFixed(2)}\nStake: £${stake.toFixed(2)}\nPotential returns: £${(stake * combinedOdds).toFixed(2)}`);
 }
 
 // Update slip buttons on render

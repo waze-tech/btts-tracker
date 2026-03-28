@@ -1,0 +1,4203 @@
+{
+  "fetchedAt": "2026-03-27T20:38:49.897Z",
+  "source": "live",
+  "totalFixtures": 62,
+  "valueBets": 0,
+  "avgProbability": 0.4918865720338146,
+  "fixtures": [
+    {
+      "id": "cb606cb4cccb8cd36f4bd2be97b09de8",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Bristol City",
+      "awayTeam": "Sheffield United",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.64,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2.1,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.36,
+        "away": 0.98,
+        "total": 2.34
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.47,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 1.06,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 1.29,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.25,
+          "defenseStrength": 0.86,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5619842128845884,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5619842128845884,
+      "models": {
+        "poisson": 0.46436120863241864,
+        "historic": 0.5900000000000001,
+        "form": 0.75
+      },
+      "source": "live",
+      "rank": 1,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "8bf42a4da640edcd7dcfaaf6999aca06",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Charlton Athletic",
+      "awayTeam": "Bristol City",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.64,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2.09,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.55,
+        "away": 0.76,
+        "total": 2.31
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.47,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.65,
+          "avgScored": 1.06,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 1.06,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5602781744013406,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5602781744013406,
+      "models": {
+        "poisson": 0.4196453253363126,
+        "historic": 0.617,
+        "form": 0.815
+      },
+      "source": "live",
+      "rank": 2,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "22bff25eb3e92bd2704b7df5194d8508",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Coventry City",
+      "awayTeam": "Derby County",
+      "commenceTime": "2026-04-03T19:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.65,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2.08,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.65,
+        "away": 0.76,
+        "total": 2.41
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.65,
+          "avgScored": 1.71,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.15,
+          "attackStrength": 1.25,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 9,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.06,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.02,
+          "defenseStrength": 0.97,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5578541563741816,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5578541563741816,
+      "models": {
+        "poisson": 0.43036960860929246,
+        "historic": 0.5960000000000001,
+        "form": 0.775
+      },
+      "source": "live",
+      "rank": 3,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "b79f5d1e1c55587b0cfc0416b7cea1a4",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Plymouth Argyle",
+      "awayTeam": "Bolton Wanderers",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.67,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2.05,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.32,
+        "away": 0.95,
+        "total": 2.27
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.47,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 1.02,
+          "defenseStrength": 1.22,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.12,
+          "avgConceded": 1.18,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.2,
+          "attackStrength": 1.12,
+          "defenseStrength": 0.89,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5522061037826302,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5522061037826302,
+      "models": {
+        "poisson": 0.45009303062806727,
+        "historic": 0.5630000000000001,
+        "form": 0.755
+      },
+      "source": "live",
+      "rank": 4,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "e534d5390cb128e7eaa3eab6b5372c24",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Hull City",
+      "awayTeam": "Coventry City",
+      "commenceTime": "2026-04-06T19:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.67,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2.05,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.36,
+        "away": 0.87,
+        "total": 2.24
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.04,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.71,
+          "avgScored": 1.29,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.12,
+          "failedToScoreRate": 0.15,
+          "attackStrength": 1.25,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5507372368523766,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5507372368523766,
+      "models": {
+        "poisson": 0.4334174818941702,
+        "historic": 0.611,
+        "form": 0.7050000000000001
+      },
+      "source": "live",
+      "rank": 5,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "5de37d389206e7c5f7d3326a18ca6758",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Bristol Rovers",
+      "awayTeam": "Accrington Stanley",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.7,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 2,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.59,
+        "away": 0.69,
+        "total": 2.28
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.41,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.05,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 0.88,
+          "avgConceded": 1.47,
+          "cleanSheetRate": 0.12,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.91,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5411236701437129,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5411236701437129,
+      "models": {
+        "poisson": 0.3948798003193619,
+        "historic": 0.5900000000000001,
+        "form": 0.84
+      },
+      "source": "live",
+      "rank": 6,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "b44321122bd6c0a73104d140184eb4be",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Leicester City",
+      "awayTeam": "Preston North End",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.41,
+          "avgScored": 0.82,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.33,
+          "attackStrength": 0.83,
+          "defenseStrength": 0.84,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 7,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "baf38dfdc574ca7fd09a7e4d6183ed3a",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Queens Park Rangers",
+      "awayTeam": "Watford",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 1.02,
+          "defenseStrength": 1.04,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 8,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "a9ce1f7fa9753e04f2f65ac404e367ef",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "West Bromwich Albion",
+      "awayTeam": "Wrexham AFC",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.47,
+          "avgConceded": 0.76,
+          "cleanSheetRate": 0.41,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.08,
+          "defenseStrength": 0.73,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 4
+        },
+        "away": null
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 9,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "235993548013c90888432fdd7b0bf6f8",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Ipswich Town",
+      "awayTeam": "Birmingham City",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 1.65,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.09,
+          "attackStrength": 1.58,
+          "defenseStrength": 0.58,
+          "form": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 8,
+          "recentConceded": 4
+        }
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 10,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "322ab89d904230b16cf83a794b8e170e",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Sheffield Wednesday",
+      "awayTeam": "Leicester City",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.24,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 0.98,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": null
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 11,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "85514732938d17373aac94138dfb7ceb",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Preston North End",
+      "awayTeam": "Queens Park Rangers",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.5,
+        "away": 1.22,
+        "total": 2.72
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.18,
+          "avgConceded": 0.88,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.33,
+          "attackStrength": 0.83,
+          "defenseStrength": 0.84,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 4
+        },
+        "away": null
+      },
+      "probability": 0.5325094065678923,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5325094065678923,
+      "models": {
+        "poisson": 0.5477986812619828,
+        "historic": 0.5325094065678923,
+        "form": 0.5325094065678923
+      },
+      "source": "live",
+      "rank": 12,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "7785be3bcb160ea1f962dc2dfaf55b84",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Watford",
+      "awayTeam": "Charlton Athletic",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.75,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.94,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.42,
+        "away": 0.76,
+        "total": 2.18
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.41,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 1.02,
+          "defenseStrength": 1.04,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 1.06,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5260802785350798,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5260802785350798,
+      "models": {
+        "poisson": 0.40438865452239936,
+        "historic": 0.557,
+        "form": 0.755
+      },
+      "source": "live",
+      "rank": 13,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "7162f5211a784383fbba063d892ff457",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Wycombe Wanderers",
+      "awayTeam": "Port Vale",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.76,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.47,
+        "away": 1.21,
+        "total": 2.68
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.82,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 1.03,
+          "form": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5235733844901199,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5235733844901199,
+      "models": {
+        "poisson": 0.5401630766447109,
+        "historic": 0.5235733844901199,
+        "form": 0.5235733844901199
+      },
+      "source": "live",
+      "rank": 14,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "95ebf05e115f24111ee7ce53af1a4314",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Stockport County FC",
+      "awayTeam": "Wimbledon",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.76,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.47,
+        "away": 1.21,
+        "total": 2.68
+      },
+      "stats": {
+        "home": null,
+        "away": null
+      },
+      "probability": 0.5235733844901199,
+      "confidence": 0.5,
+      "impliedProbFromOdds": 0.5235733844901199,
+      "models": {
+        "poisson": 0.5401630766447109,
+        "historic": 0.5235733844901199,
+        "form": 0.5235733844901199
+      },
+      "source": "live",
+      "rank": 15,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "29a92f685a75f64808255f32f1c97d00",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Lincoln City",
+      "awayTeam": "Wimbledon",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.76,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.47,
+        "away": 1.21,
+        "total": 2.68
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.29,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.93,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": null
+      },
+      "probability": 0.5235733844901199,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5235733844901199,
+      "models": {
+        "poisson": 0.5401630766447109,
+        "historic": 0.5235733844901199,
+        "form": 0.5235733844901199
+      },
+      "source": "live",
+      "rank": 16,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "4bc4dabf60edc4a03d585f5a8977c0ec",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Luton",
+      "awayTeam": "Peterborough United",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.76,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.47,
+        "away": 1.21,
+        "total": 2.68
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.65,
+          "avgScored": 1.18,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.12,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.18,
+          "defenseStrength": 1.05,
+          "form": [
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5235733844901199,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5235733844901199,
+      "models": {
+        "poisson": 0.5401630766447109,
+        "historic": 0.5235733844901199,
+        "form": 0.5235733844901199
+      },
+      "source": "live",
+      "rank": 17,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "cfdb4a5d527c907727c324d7b778553a",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Stockport County FC",
+      "awayTeam": "Wycombe Wanderers",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.76,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.47,
+        "away": 1.21,
+        "total": 2.68
+      },
+      "stats": {
+        "home": null,
+        "away": null
+      },
+      "probability": 0.5235733844901199,
+      "confidence": 0.5,
+      "impliedProbFromOdds": 0.5235733844901199,
+      "models": {
+        "poisson": 0.5401630766447109,
+        "historic": 0.5235733844901199,
+        "form": 0.5235733844901199
+      },
+      "source": "live",
+      "rank": 18,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "3945e46ac00ff4dfeab720a676e0f1ea",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Oxford United",
+      "awayTeam": "Hull City",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.77,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.92,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.55,
+        "away": 0.76,
+        "total": 2.31
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.41,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.09,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 1,
+          "avgConceded": 1.47,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.04,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5196054844945754,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5196054844945754,
+      "models": {
+        "poisson": 0.4187470233212786,
+        "historic": 0.5900000000000001,
+        "form": 0.625
+      },
+      "source": "live",
+      "rank": 19,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "c776a7e10d260ae1e0d070b8df88d74b",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Accrington Stanley",
+      "awayTeam": "Crewe Alexandra",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.77,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.91,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.23,
+        "away": 0.83,
+        "total": 2.05
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.29,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.91,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.06,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.03,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5187407713623002,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5187407713623002,
+      "models": {
+        "poisson": 0.397221145249556,
+        "historic": 0.5630000000000001,
+        "form": 0.755
+      },
+      "source": "live",
+      "rank": 20,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "85517ca2ce5a3901ad1c149e73b52f42",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Barnet",
+      "awayTeam": "Cambridge United",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": null,
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.82,
+          "avgConceded": 1.47,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.83,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 21,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "3cb67c8fc86242e83444fed5ae6415eb",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Barrow",
+      "awayTeam": "Bromley FC",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.12,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.35,
+          "attackStrength": 0.78,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": null
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 22,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "cddb1dfa9d74dc440f2af40f0a5b1b30",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Crewe Alexandra",
+      "awayTeam": "Oldham Athletic",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.41,
+          "avgConceded": 0.94,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.03,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": null
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 23,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "bd6c9c4897a70418fd5d16b92a3c98ca",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Barnet",
+      "awayTeam": "Bromley FC",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": null,
+        "away": null
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.5,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 24,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "5ae7fd44494e406290dbf1b5b3c9fc44",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Chesterfield FC",
+      "awayTeam": "Cheltenham Town",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": null,
+        "away": null
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.5,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 25,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "7f6b40fad3e3ba022bd6d88a9b76456c",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Colchester United",
+      "awayTeam": "Oldham Athletic",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 1.19,
+        "total": 2.65
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.18,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.83,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        },
+        "away": null
+      },
+      "probability": 0.5154673822223397,
+      "confidence": 0.75,
+      "impliedProbFromOdds": 0.5154673822223397,
+      "models": {
+        "poisson": 0.5343719604940882,
+        "historic": 0.5154673822223397,
+        "form": 0.5154673822223397
+      },
+      "source": "live",
+      "rank": 26,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "d9570f9e83fa516db367901f43f8c766",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Norwich City",
+      "awayTeam": "Portsmouth",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.79,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.89,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.74,
+        "away": 0.6,
+        "total": 2.34
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.65,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.18,
+          "defenseStrength": 0.97,
+          "form": [
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 8,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.88,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.93,
+          "defenseStrength": 1.04,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5136142856945473,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5136142856945473,
+      "models": {
+        "poisson": 0.3701177282101049,
+        "historic": 0.5630000000000001,
+        "form": 0.775
+      },
+      "source": "live",
+      "rank": 27,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "bb6917d2a0394d17e56dc2c145e3d310",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Colchester United",
+      "awayTeam": "Walsall",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.8,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.88,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.17,
+        "away": 0.83,
+        "total": 1.99
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.18,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.83,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 1.06,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5101877310899653,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5101877310899653,
+      "models": {
+        "poisson": 0.3871450024221453,
+        "historic": 0.557,
+        "form": 0.755
+      },
+      "source": "live",
+      "rank": 28,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "a435f3a2f90d18bc5d816211ad1761f4",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Newport County",
+      "awayTeam": "Crawley Town",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.82,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.86,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.34,
+        "away": 0.69,
+        "total": 2.03
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 1.03,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 0.94,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.12,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 1.05,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.5053656107477356,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5053656107477356,
+      "models": {
+        "poisson": 0.3690970794394123,
+        "historic": 0.557,
+        "form": 0.78
+      },
+      "source": "live",
+      "rank": 29,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "15724577c7261252cbf7f7ed080bbf2e",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Bristol Rovers",
+      "awayTeam": "Fleetwood Town",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.83,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.85,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.34,
+        "away": 0.73,
+        "total": 2.07
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.41,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.05,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5016836751245559,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5016836751245559,
+      "models": {
+        "poisson": 0.38330196694345764,
+        "historic": 0.5630000000000001,
+        "form": 0.685
+      },
+      "source": "live",
+      "rank": 30,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "92a39ddfb9647691e6eb3b74c27938e2",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Crawley Town",
+      "awayTeam": "Gillingham",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.84,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.84,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.28,
+        "away": 0.73,
+        "total": 2.02
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.35,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 1.05,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.5010964708559583,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.5010964708559583,
+      "models": {
+        "poisson": 0.37533040190212946,
+        "historic": 0.5630000000000001,
+        "form": 0.7050000000000001
+      },
+      "source": "live",
+      "rank": 31,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "b820b770343f9868cdabed6f36d7e5b8",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Salford City",
+      "awayTeam": "MK Dons",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.86,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.82,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.16,
+        "away": 0.87,
+        "total": 2.03
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.98,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.18,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.12,
+          "defenseStrength": 0.82,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4939443309950544,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4939443309950544,
+      "models": {
+        "poisson": 0.39878038443345426,
+        "historic": 0.53,
+        "form": 0.645
+      },
+      "source": "live",
+      "rank": 32,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "696032c1244cef11baa392b25471e304",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Portsmouth",
+      "awayTeam": "Oxford United",
+      "commenceTime": "2026-04-06T11:30:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.87,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.81,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.48,
+        "away": 0.67,
+        "total": 2.16
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.93,
+          "defenseStrength": 1.04,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.47,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.09,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.4919847070455327,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4919847070455327,
+      "models": {
+        "poisson": 0.37943474454562814,
+        "historic": 0.53,
+        "form": 0.675
+      },
+      "source": "live",
+      "rank": 33,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "9f06af1f9e647dbc0c02cfe361cc5c3a",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Blackburn Rovers",
+      "awayTeam": "West Bromwich Albion",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.88,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.8,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.19,
+        "away": 0.8,
+        "total": 1.99
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.59,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.2,
+          "attackStrength": 1.12,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 8,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 1.12,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.08,
+          "defenseStrength": 0.73,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        }
+      },
+      "probability": 0.4884015439321903,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4884015439321903,
+      "models": {
+        "poisson": 0.38417311984931174,
+        "historic": 0.536,
+        "form": 0.665
+      },
+      "source": "live",
+      "rank": 34,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "c3581f1656ef065e8a94ea6a08e73a16",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Leyton Orient",
+      "awayTeam": "Mansfield Town",
+      "commenceTime": "2026-04-14T18:45:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.88,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.8,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.27,
+        "away": 0.73,
+        "total": 2
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.06,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.48817695236764763,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.48817695236764763,
+      "models": {
+        "poisson": 0.372126054150328,
+        "historic": 0.53,
+        "form": 0.7
+      },
+      "source": "live",
+      "rank": 35,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "38bb6ae2a404c4a5a3a21bb058880c7c",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Salford City",
+      "awayTeam": "Notts County",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.89,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.79,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.22,
+        "away": 0.74,
+        "total": 1.96
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.98,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.18,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.89,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.48707165321129126,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.48707165321129126,
+      "models": {
+        "poisson": 0.3678124471362028,
+        "historic": 0.53,
+        "form": 0.72
+      },
+      "source": "live",
+      "rank": 36,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "a7b101886e7edd3862f3f555c7a4ba00",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Walsall",
+      "awayTeam": "Gillingham",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.9,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.79,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.4,
+        "away": 0.65,
+        "total": 2.05
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.47,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.48491954567852646,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.48491954567852646,
+      "models": {
+        "poisson": 0.36128422595228094,
+        "historic": 0.53,
+        "form": 0.7050000000000001
+      },
+      "source": "live",
+      "rank": 37,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "1025ed9ec09927b9b1ae76a7fcfbea9b",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Grimsby Town",
+      "awayTeam": "Harrogate Town",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.91,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.78,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.46,
+        "away": 0.64,
+        "total": 2.1
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.35,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.82,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 1.03,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.48179615667583436,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.48179615667583436,
+      "models": {
+        "poisson": 0.3623539481685208,
+        "historic": 0.5630000000000001,
+        "form": 0.625
+      },
+      "source": "live",
+      "rank": 38,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "13e8cbca54a0adcea2dfdbb37fa5575a",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Bradford City",
+      "awayTeam": "Northampton Town",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.93,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.75,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.44,
+        "away": 0.64,
+        "total": 2.09
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.59,
+          "avgScored": 1.41,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.88,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 0.98,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.4755675276114542,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4755675276114542,
+      "models": {
+        "poisson": 0.36165719024767606,
+        "historic": 0.5630000000000001,
+        "form": 0.6
+      },
+      "source": "live",
+      "rank": 39,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "9cfca910dac734fbed496724ef6a024c",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Huddersfield Town",
+      "awayTeam": "Reading",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.94,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.75,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.3,
+        "away": 0.67,
+        "total": 1.97
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.53,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.16,
+          "defenseStrength": 0.78,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 8,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.18,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.2,
+          "attackStrength": 1.11,
+          "defenseStrength": 0.83,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.47464188537969687,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.47464188537969687,
+      "models": {
+        "poisson": 0.3534058341771041,
+        "historic": 0.497,
+        "form": 0.735
+      },
+      "source": "live",
+      "rank": 40,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "417c4d274f0e0d510bbb230a072a73ac",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Swansea City",
+      "awayTeam": "Middlesbrough",
+      "commenceTime": "2026-04-06T16:30:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.94,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.75,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.13,
+        "away": 0.79,
+        "total": 1.92
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.35,
+          "avgConceded": 0.94,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.18,
+          "defenseStrength": 0.82,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.47405035340597584,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.47405035340597584,
+      "models": {
+        "poisson": 0.3696018720132797,
+        "historic": 0.497,
+        "form": 0.675
+      },
+      "source": "live",
+      "rank": 41,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "89f39700ed94b158f4fe1131cfcdcbfb",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Exeter City",
+      "awayTeam": "Leyton Orient",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.94,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.75,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.32,
+        "away": 0.69,
+        "total": 2.01
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.96,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4734761846778817,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4734761846778817,
+      "models": {
+        "poisson": 0.3644825081730704,
+        "historic": 0.53,
+        "form": 0.625
+      },
+      "source": "live",
+      "rank": 42,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "908d1caa2beff3cfe5898b3953f3809e",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Sheffield United",
+      "awayTeam": "Swansea City",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.95,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.74,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.59,
+        "away": 0.56,
+        "total": 2.14
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.71,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.25,
+          "defenseStrength": 0.86,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "recentScored": 9,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.47250125546934174,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.47250125546934174,
+      "models": {
+        "poisson": 0.3388100054874261,
+        "historic": 0.53,
+        "form": 0.69
+      },
+      "source": "live",
+      "rank": 43,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "f7349af9fc0329d52c001751bd269814",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Burton Albion",
+      "awayTeam": "Barnsley",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.95,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.74,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.05,
+        "away": 0.86,
+        "total": 1.91
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.12,
+          "avgConceded": 1.18,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.35,
+          "attackStrength": 0.78,
+          "defenseStrength": 1.12,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.06,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.03,
+          "defenseStrength": 0.91,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.47228170067732883,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.47228170067732883,
+      "models": {
+        "poisson": 0.37565841261628624,
+        "historic": 0.53,
+        "form": 0.625
+      },
+      "source": "live",
+      "rank": 44,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "e15d398701e45dc4b86d2955389f5f24",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Cambridge United",
+      "awayTeam": "Swindon Town",
+      "commenceTime": "2026-04-02T19:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.95,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.74,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.17,
+        "away": 0.73,
+        "total": 1.9
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.18,
+          "avgConceded": 1.12,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.83,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4722448669694126,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4722448669694126,
+      "models": {
+        "poisson": 0.35758379326536127,
+        "historic": 0.53,
+        "form": 0.65
+      },
+      "source": "live",
+      "rank": 45,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "ab34c2392119d56b2d955c7dc7bd369d",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Wigan Athletic",
+      "awayTeam": "Leyton Orient",
+      "commenceTime": "2026-04-02T18:45:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.97,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.73,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.32,
+        "away": 0.69,
+        "total": 2.01
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.46704638067788173,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.46704638067788173,
+      "models": {
+        "poisson": 0.3644825081730704,
+        "historic": 0.53,
+        "form": 0.605
+      },
+      "source": "live",
+      "rank": 46,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "0bc3171f87ebcfbbcb2a35ef0ec73b08",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Doncaster Rovers",
+      "awayTeam": "Mansfield Town",
+      "commenceTime": "2026-04-03T11:30:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.98,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.72,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.55,
+        "away": 0.55,
+        "total": 2.11
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.65,
+          "avgConceded": 0.76,
+          "cleanSheetRate": 0.41,
+          "failedToScoreRate": 0.15,
+          "attackStrength": 1.23,
+          "defenseStrength": 0.72,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 8,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1.06,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.05,
+          "defenseStrength": 0.91,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.46475498945856436,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.46475498945856436,
+      "models": {
+        "poisson": 0.3351704543523653,
+        "historic": 0.497,
+        "form": 0.72
+      },
+      "source": "live",
+      "rank": 47,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "da969b8febb6da72d56a76ff232841e3",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Swindon Town",
+      "awayTeam": "Fleetwood Town",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 1.98,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.72,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.34,
+        "away": 0.65,
+        "total": 1.99
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.41,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.96,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.46388132806114035,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.46388132806114035,
+      "models": {
+        "poisson": 0.354324177913645,
+        "historic": 0.53,
+        "form": 0.6000000000000001
+      },
+      "source": "live",
+      "rank": 48,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "84afb364a445462c13270bcbaf6f46ed",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Harrogate Town",
+      "awayTeam": "Notts County",
+      "commenceTime": "2026-03-28T12:30:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.02,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.69,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.12,
+        "away": 0.74,
+        "total": 1.86
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 1.03,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 1,
+          "avgConceded": 1.18,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.98,
+          "defenseStrength": 0.89,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.45507016364382363,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.45507016364382363,
+      "models": {
+        "poisson": 0.35172888587516365,
+        "historic": 0.53,
+        "form": 0.585
+      },
+      "source": "live",
+      "rank": 49,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "12146583ccb635720f0bf36dc893b93f",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Birmingham City",
+      "awayTeam": "Blackburn Rovers",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.02,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.69,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 2.14,
+        "away": 0.45,
+        "total": 2.59
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.41,
+          "avgScored": 2.12,
+          "avgConceded": 0.59,
+          "cleanSheetRate": 0.53,
+          "failedToScoreRate": 0.09,
+          "attackStrength": 1.58,
+          "defenseStrength": 0.58,
+          "form": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 11,
+          "recentConceded": 3
+        },
+        "away": {
+          "bttsRate": 0.59,
+          "avgScored": 1.12,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.2,
+          "attackStrength": 1.12,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.4543807110362192,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4543807110362192,
+      "models": {
+        "poisson": 0.3183334023027093,
+        "historic": 0.491,
+        "form": 0.6749999999999999
+      },
+      "source": "live",
+      "rank": 50,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "1c5ce49ee56e2ede1303d37d3da90447",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Blackpool",
+      "awayTeam": "Exeter City",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.03,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.68,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.21,
+        "away": 0.68,
+        "total": 1.9
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.96,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.45308165832224206,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.45308165832224206,
+      "models": {
+        "poisson": 0.34853083182720457,
+        "historic": 0.53,
+        "form": 0.55
+      },
+      "source": "live",
+      "rank": 51,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "5d558c24ac9f05af015a47fba69e7a5d",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Rotherham United",
+      "awayTeam": "Stevenage",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.04,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.68,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.38,
+        "away": 0.6,
+        "total": 1.98
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.82,
+          "avgConceded": 1.47,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.83,
+          "defenseStrength": 1.08,
+          "form": [
+            true,
+            false,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.45204853135194706,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.45204853135194706,
+      "models": {
+        "poisson": 0.3369739807821044,
+        "historic": 0.53,
+        "form": 0.59
+      },
+      "source": "live",
+      "rank": 52,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "624e26c5e2144da635a06f9f53f413d5",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Millwall",
+      "awayTeam": "Norwich City",
+      "commenceTime": "2026-04-06T12:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.04,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.67,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.14,
+        "away": 0.66,
+        "total": 1.79
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.41,
+          "avgScored": 1.18,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.41,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 0.84,
+          "form": [
+            false,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.65,
+          "avgScored": 1.18,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.18,
+          "defenseStrength": 0.97,
+          "form": [
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.45072871910888,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.45072871910888,
+      "models": {
+        "poisson": 0.3266598913530667,
+        "historic": 0.518,
+        "form": 0.62
+      },
+      "source": "live",
+      "rank": 53,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "701930f65727022ff917c048772a7f72",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Wigan Athletic",
+      "awayTeam": "Rotherham United",
+      "commenceTime": "2026-04-14T18:45:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.04,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.67,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.38,
+        "away": 0.6,
+        "total": 1.99
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.88,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 1.02,
+          "form": [
+            true,
+            false,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.4503925410623512,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4503925410623512,
+      "models": {
+        "poisson": 0.3399966956941138,
+        "historic": 0.53,
+        "form": 0.5800000000000001
+      },
+      "source": "live",
+      "rank": 54,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "7ab19e1eb92f4385bdb729c64df2c21f",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Reading",
+      "awayTeam": "Wigan Athletic",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.04,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.67,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.38,
+        "away": 0.57,
+        "total": 1.95
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.47,
+          "avgConceded": 0.88,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.2,
+          "attackStrength": 1.11,
+          "defenseStrength": 0.83,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ],
+          "recentScored": 7,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.94,
+          "avgConceded": 1.24,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.26,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4501134877193092,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4501134877193092,
+      "models": {
+        "poisson": 0.3249006838206871,
+        "historic": 0.503,
+        "form": 0.665
+      },
+      "source": "live",
+      "rank": 55,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "5c6b3cdbd44b0a69fdf78853bf05fcbc",
+      "sportKey": "soccer_england_league1",
+      "league": "League One",
+      "homeTeam": "Blackpool",
+      "awayTeam": "Burton Albion",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.07,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.66,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.44,
+        "away": 0.55,
+        "total": 1.99
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.76,
+          "avgConceded": 1.53,
+          "cleanSheetRate": 0.12,
+          "failedToScoreRate": 0.35,
+          "attackStrength": 0.78,
+          "defenseStrength": 1.12,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 8
+        }
+      },
+      "probability": 0.44438996796997876,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.44438996796997876,
+      "models": {
+        "poisson": 0.32440855104439725,
+        "historic": 0.53,
+        "form": 0.605
+      },
+      "source": "live",
+      "rank": 56,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "b4b20fa2a1ad4e4a8d18885a875f0245",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Derby County",
+      "awayTeam": "Stoke City",
+      "commenceTime": "2026-04-06T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.15,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.61,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.3,
+        "away": 0.6,
+        "total": 1.9
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.35,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.22,
+          "attackStrength": 1.02,
+          "defenseStrength": 0.97,
+          "form": [
+            true,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 7,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.88,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.89,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 4,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.42868080307021084,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.42868080307021084,
+      "models": {
+        "poisson": 0.326850679044913,
+        "historic": 0.503,
+        "form": 0.52
+      },
+      "source": "live",
+      "rank": 57,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "4fcb1a2f92eea196661615f51ec3d054",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Middlesbrough",
+      "awayTeam": "Millwall",
+      "commenceTime": "2026-04-03T11:30:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.21,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.58,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.4,
+        "away": 0.52,
+        "total": 1.92
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.59,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.18,
+          "defenseStrength": 0.82,
+          "form": [
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 8,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.94,
+          "avgConceded": 1.18,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.28,
+          "attackStrength": 0.89,
+          "defenseStrength": 0.84,
+          "form": [
+            false,
+            false,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4167927931077218,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4167927931077218,
+      "models": {
+        "poisson": 0.30665818912827075,
+        "historic": 0.503,
+        "form": 0.52
+      },
+      "source": "live",
+      "rank": 58,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "06f2c119cabf4a18db47045f6122f6b8",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Newport County",
+      "awayTeam": "Shrewsbury Town",
+      "commenceTime": "2026-03-28T15:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.21,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.58,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.34,
+        "away": 0.56,
+        "total": 1.9
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.53,
+          "avgScored": 1.24,
+          "avgConceded": 1.06,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 1.03,
+          "form": [
+            true,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.76,
+          "avgConceded": 1.41,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.33,
+          "attackStrength": 0.82,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.4161322839092333,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4161322839092333,
+      "models": {
+        "poisson": 0.31669551424274067,
+        "historic": 0.503,
+        "form": 0.505
+      },
+      "source": "live",
+      "rank": 59,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "7a16ed12c2324542cafa4ac4a589749f",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "Shrewsbury Town",
+      "awayTeam": "Tranmere Rovers",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.23,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.57,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.17,
+        "away": 0.65,
+        "total": 1.82
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.18,
+          "avgConceded": 1,
+          "cleanSheetRate": 0.29,
+          "failedToScoreRate": 0.33,
+          "attackStrength": 0.82,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.53,
+          "avgScored": 0.94,
+          "avgConceded": 1.29,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.24,
+          "attackStrength": 0.96,
+          "defenseStrength": 0.96,
+          "form": [
+            false,
+            true,
+            true,
+            false,
+            true
+          ],
+          "recentScored": 5,
+          "recentConceded": 6
+        }
+      },
+      "probability": 0.4130985630153952,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.4130985630153952,
+      "models": {
+        "poisson": 0.3305503089231004,
+        "historic": 0.497,
+        "form": 0.43000000000000005
+      },
+      "source": "live",
+      "rank": 60,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "ae6bf66a759b8f144ffdab3090a83733",
+      "sportKey": "soccer_england_league2",
+      "league": "League Two",
+      "homeTeam": "MK Dons",
+      "awayTeam": "Barrow",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.39,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.5,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.58,
+        "away": 0.43,
+        "total": 2.02
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.53,
+          "avgConceded": 0.82,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.17,
+          "attackStrength": 1.12,
+          "defenseStrength": 0.82,
+          "form": [
+            false,
+            true,
+            true,
+            true,
+            false
+          ],
+          "recentScored": 8,
+          "recentConceded": 4
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.76,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.18,
+          "failedToScoreRate": 0.35,
+          "attackStrength": 0.78,
+          "defenseStrength": 1.02,
+          "form": [
+            false,
+            true,
+            false,
+            false,
+            true
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.38516165257571217,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.38516165257571217,
+      "models": {
+        "poisson": 0.27951885572380486,
+        "historic": 0.47,
+        "form": 0.45000000000000007
+      },
+      "source": "live",
+      "rank": 61,
+      "valueRating": 0,
+      "isValueBet": false
+    },
+    {
+      "id": "2377fea9366a623a2a3defc2532fdcf1",
+      "sportKey": "soccer_efl_champ",
+      "league": "Championship",
+      "homeTeam": "Stoke City",
+      "awayTeam": "Sheffield Wednesday",
+      "commenceTime": "2026-04-03T14:00:00Z",
+      "btts": {
+        "yes": {
+          "odds": 2.46,
+          "bookmaker": "Model Est."
+        },
+        "no": {
+          "odds": 1.47,
+          "bookmaker": "Model Est."
+        }
+      },
+      "expectedGoals": {
+        "home": 1.25,
+        "away": 0.52,
+        "total": 1.77
+      },
+      "stats": {
+        "home": {
+          "bttsRate": 0.47,
+          "avgScored": 1.24,
+          "avgConceded": 0.94,
+          "cleanSheetRate": 0.35,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.89,
+          "defenseStrength": 0.93,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 6,
+          "recentConceded": 5
+        },
+        "away": {
+          "bttsRate": 0.47,
+          "avgScored": 0.82,
+          "avgConceded": 1.35,
+          "cleanSheetRate": 0.24,
+          "failedToScoreRate": 0.3,
+          "attackStrength": 0.85,
+          "defenseStrength": 0.98,
+          "form": [
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "recentScored": 4,
+          "recentConceded": 7
+        }
+      },
+      "probability": 0.3738687103731818,
+      "confidence": 1,
+      "impliedProbFromOdds": 0.3738687103731818,
+      "models": {
+        "poisson": 0.29033441194040405,
+        "historic": 0.47,
+        "form": 0.37
+      },
+      "source": "live",
+      "rank": 62,
+      "valueRating": 0,
+      "isValueBet": false
+    }
+  ],
+  "methodology": {
+    "description": "BTTS probability calculated using xG-based Poisson model + 3 supporting models",
+    "models": [
+      {
+        "name": "xG Poisson (Primary)",
+        "weight": 0.45,
+        "description": "Expected Goals model - removes luck variance, measures shot quality"
+      },
+      {
+        "name": "Historical BTTS Rates",
+        "weight": 0.25,
+        "description": "Team-specific BTTS rates with home/away venue splits"
+      },
+      {
+        "name": "Scoring Patterns",
+        "weight": 0.15,
+        "description": "Failed-to-score and clean sheet rates adjusted for opponent"
+      },
+      {
+        "name": "Recent Form",
+        "weight": 0.15,
+        "description": "Exponentially weighted last 5 games (reduced weight - noisy signal)"
+      }
+    ]
+  }
+}

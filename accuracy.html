@@ -423,12 +423,32 @@
         <button class="filter-btn" data-filter="League One">League One</button>
         <button class="filter-btn" data-filter="League Two">League Two</button>
       </div>
-      <select class="sort-select" id="topNSelect">
-        <option value="all">Show: All</option>
-        <option value="3">Show: Top 3</option>
-        <option value="6">Show: Top 6</option>
-        <option value="9">Show: Top 9</option>
-      </select>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <select class="sort-select" id="dateFilter">
+          <option value="all">All Dates</option>
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="week">This Week</option>
+          <option value="lastweek">Last Week</option>
+          <option value="custom">Custom Range...</option>
+        </select>
+        <select class="sort-select" id="topNSelect">
+          <option value="all">Show: All</option>
+          <option value="3">Show: Top 3</option>
+          <option value="6">Show: Top 6</option>
+          <option value="9">Show: Top 9</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Date Range Picker (hidden by default) -->
+    <div id="dateRangePicker" style="display: none; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+      <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+        <label style="color: var(--text-muted);">From: <input type="date" id="dateFrom" style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem; border-radius: 8px;"></label>
+        <label style="color: var(--text-muted);">To: <input type="date" id="dateTo" style="background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem; border-radius: 8px;"></label>
+        <button onclick="applyDateRange()" style="background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer;">Apply</button>
+        <button onclick="clearDateRange()" style="background: var(--card); color: var(--text-muted); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">Clear</button>
+      </div>
     </div>
     
     <div class="filter-notice" id="filterNotice">
@@ -507,6 +527,31 @@
     let allData = null;
     let currentFilter = 'all';
     let currentTopN = 'all';
+    let currentDateFilter = 'all';
+    let customDateFrom = null;
+    let customDateTo = null;
+    let sortColumn = 'rank';
+    let sortDirection = 'asc';
+    
+    // Frank's Pick logic - matches main.js
+    function getFranksPick(r) {
+      // For accuracy page, we use stored prediction data
+      // Simple heuristic based on what we track
+      let score = 0;
+      
+      if (r.probability >= 0.55) score += 2;
+      else if (r.probability >= 0.50) score += 1;
+      else if (r.probability < 0.45) score -= 2;
+      else score -= 1;
+      
+      // Use models if available
+      if (r.models) {
+        if (r.models.historic >= 0.55) score += 1;
+        if (r.models.form >= 0.70) score += 1;
+      }
+      
+      return score >= 1;
+    }
     
     async function loadData() {
       try {
@@ -524,8 +569,45 @@
       return value !== null && !isNaN(value) ? `${(value * 100).toFixed(0)}%` : '-';
     }
     
-    function filterPredictions(predictions, league, topN) {
+    function filterPredictions(predictions, league, topN, dateFilter = 'all') {
       let filtered = predictions;
+      
+      // Filter by date
+      if (dateFilter !== 'all') {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const weekStart = new Date(today);
+        weekStart.setDate(today.getDate() - today.getDay());
+        const lastWeekStart = new Date(weekStart);
+        lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+        const lastWeekEnd = new Date(weekStart);
+        lastWeekEnd.setDate(lastWeekEnd.getDate() - 1);
+        
+        filtered = filtered.filter(p => {
+          const pDate = new Date(p.date);
+          const pDateOnly = new Date(pDate.getFullYear(), pDate.getMonth(), pDate.getDate());
+          
+          switch(dateFilter) {
+            case 'today':
+              return pDateOnly.getTime() === today.getTime();
+            case 'yesterday':
+              return pDateOnly.getTime() === yesterday.getTime();
+            case 'week':
+              return pDateOnly >= weekStart && pDateOnly <= today;
+            case 'lastweek':
+              return pDateOnly >= lastWeekStart && pDateOnly <= lastWeekEnd;
+            case 'custom':
+              if (customDateFrom && customDateTo) {
+                return pDateOnly >= customDateFrom && pDateOnly <= customDateTo;
+              }
+              return true;
+            default:
+              return true;
+          }
+        });
+      }
       
       // Filter by league
       if (league !== 'all') {
@@ -750,9 +832,59 @@
       });
     }
     
+    function sortPredictions(predictions, column, direction) {
+      return [...predictions].sort((a, b) => {
+        let valA, valB;
+        
+        switch(column) {
+          case 'rank':
+            valA = a.rank || 999;
+            valB = b.rank || 999;
+            break;
+          case 'match':
+            valA = a.homeTeam || '';
+            valB = b.homeTeam || '';
+            break;
+          case 'league':
+            valA = a.league || '';
+            valB = b.league || '';
+            break;
+          case 'frank':
+            valA = getFranksPick(a) ? 1 : 0;
+            valB = getFranksPick(b) ? 1 : 0;
+            break;
+          case 'score':
+            valA = (a.homeGoals || 0) + (a.awayGoals || 0);
+            valB = (b.homeGoals || 0) + (b.awayGoals || 0);
+            break;
+          case 'btts':
+            valA = a.bttsActual ? 1 : 0;
+            valB = b.bttsActual ? 1 : 0;
+            break;
+          case 'prob':
+            valA = a.probability || 0;
+            valB = b.probability || 0;
+            break;
+          case 'result':
+            valA = a.isCorrect === null ? -1 : (a.isCorrect ? 1 : 0);
+            valB = b.isCorrect === null ? -1 : (b.isCorrect ? 1 : 0);
+            break;
+          default:
+            valA = a.rank || 999;
+            valB = b.rank || 999;
+        }
+        
+        if (typeof valA === 'string') {
+          return direction === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        return direction === 'asc' ? valA - valB : valB - valA;
+      });
+    }
+    
     function renderRecentResults(predictions) {
       const container = document.getElementById('recentResults');
-      const recent = predictions.slice(-20).reverse();
+      const sorted = sortPredictions(predictions, sortColumn, sortDirection);
+      const recent = sorted.slice(0, 50); // Show up to 50
       
       if (recent.length === 0) {
         container.innerHTML = `
@@ -766,16 +898,17 @@
       }
       
       container.innerHTML = `
-        <table class="results-table">
+        <table class="results-table" id="resultsTable">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Match</th>
-              <th>League</th>
-              <th>Score</th>
-              <th>BTTS</th>
-              <th>Predicted</th>
-              <th>Result</th>
+              <th data-sort="rank" style="cursor: pointer;">Rank ⇅</th>
+              <th data-sort="match" style="cursor: pointer;">Match ⇅</th>
+              <th data-sort="league" style="cursor: pointer;">League ⇅</th>
+              <th data-sort="frank" style="cursor: pointer;">🦉 Frank ⇅</th>
+              <th data-sort="score" style="cursor: pointer;">Score ⇅</th>
+              <th data-sort="btts" style="cursor: pointer;">BTTS ⇅</th>
+              <th data-sort="prob" style="cursor: pointer;">Prob ⇅</th>
+              <th data-sort="result" style="cursor: pointer;">Result ⇅</th>
             </tr>
           </thead>
           <tbody>
@@ -785,6 +918,12 @@
               else if (r.rank <= 6) rankClass = 'top6';
               else if (r.rank <= 9) rankClass = 'top9';
               
+              const frankPick = getFranksPick(r);
+              const frankPickText = frankPick ? '<span style="color: var(--accent); font-weight: 700;">✓ YES</span>' : '<span style="color: var(--danger); font-weight: 700;">✗ NO</span>';
+              const scoreText = r.homeGoals !== null ? `${r.homeGoals} - ${r.awayGoals}` : '-';
+              const bttsText = r.bttsActual !== null ? (r.bttsActual ? '✅ Yes' : '❌ No') : '-';
+              const resultText = r.isCorrect !== null ? `<span class="result-badge ${r.isCorrect ? 'correct' : 'wrong'}">${r.isCorrect ? '✓' : '✗'}</span>` : '<span style="color: var(--text-dim);">⏳</span>';
+              
               return `
                 <tr>
                   <td>
@@ -792,14 +931,11 @@
                   </td>
                   <td>${r.homeTeam} vs ${r.awayTeam}</td>
                   <td style="font-size: 0.8rem; color: var(--text-muted);">${r.league}</td>
-                  <td>${r.homeGoals} - ${r.awayGoals}</td>
-                  <td>${r.bttsActual ? '✅ Yes' : '❌ No'}</td>
+                  <td>${frankPickText}</td>
+                  <td>${scoreText}</td>
+                  <td>${bttsText}</td>
                   <td>${(r.probability * 100).toFixed(0)}%</td>
-                  <td>
-                    <span class="result-badge ${r.isCorrect ? 'correct' : 'wrong'}">
-                      ${r.isCorrect ? '✓ Correct' : '✗ Wrong'}
-                    </span>
-                  </td>
+                  <td>${resultText}</td>
                 </tr>
               `;
             }).join('')}
@@ -811,7 +947,7 @@
     function updateDisplay() {
       if (!allData || !allData.predictions) return;
       
-      const filtered = filterPredictions(allData.predictions, currentFilter, currentTopN);
+      const filtered = filterPredictions(allData.predictions, currentFilter, currentTopN, currentDateFilter);
       const stats = calculateStats(filtered);
       
       // Show filter notice
@@ -865,6 +1001,54 @@
         updateDisplay();
       });
       
+      // Set up Date filter
+      document.getElementById('dateFilter').addEventListener('change', (e) => {
+        currentDateFilter = e.target.value;
+        if (currentDateFilter === 'custom') {
+          document.getElementById('dateRangePicker').style.display = 'block';
+        } else {
+          document.getElementById('dateRangePicker').style.display = 'none';
+          customDateFrom = null;
+          customDateTo = null;
+          updateDisplay();
+        }
+      });
+      
+      updateDisplay();
+    }
+    
+    // Set up table header sorting
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('th[data-sort]')) {
+        const newColumn = e.target.dataset.sort;
+        if (sortColumn === newColumn) {
+          sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortColumn = newColumn;
+          sortDirection = 'asc';
+        }
+        updateDisplay();
+      }
+    });
+    
+    function applyDateRange() {
+      const fromInput = document.getElementById('dateFrom').value;
+      const toInput = document.getElementById('dateTo').value;
+      
+      if (fromInput && toInput) {
+        customDateFrom = new Date(fromInput);
+        customDateTo = new Date(toInput);
+        customDateTo.setHours(23, 59, 59, 999);
+        updateDisplay();
+      }
+    }
+    
+    function clearDateRange() {
+      document.getElementById('dateFilter').value = 'all';
+      document.getElementById('dateRangePicker').style.display = 'none';
+      currentDateFilter = 'all';
+      customDateFrom = null;
+      customDateTo = null;
       updateDisplay();
     }
     
